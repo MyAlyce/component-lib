@@ -20,4 +20,4 @@ LoggedIn.args = {
 export const LoggedOut = Template.bind({});
 LoggedOut.args = {
   ...HeaderStories.LoggedOut.args,
-};
+};;;
