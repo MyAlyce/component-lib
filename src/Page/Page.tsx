@@ -4,6 +4,7 @@ import { Header } from '../Header/Header';
 import './page.css';
 
 export interface PageProps {
+  // eslint-disable-next-line @typescript-eslint/ban-types
   user?: {};
   onLogin: () => void;
   onLogout: () => void;

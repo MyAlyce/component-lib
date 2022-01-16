@@ -13,7 +13,7 @@ describe('Button', () => {
     test('renders a primary button', async () => {
         render(<Button primary label='Click Me'></Button>);
 
-        expect(screen.getByText('Click Me')).toHaveClass('storybook-button--primary')
+        expect(screen.getByText('Click Me')).toHaveClass('storybook-button--primary');
     });
 
     test('renders a button with custom colors', async () => {
