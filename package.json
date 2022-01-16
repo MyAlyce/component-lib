@@ -9,9 +9,12 @@
     "test:watch": "react-scripts test --watchAll",
     "eject": "react-scripts eject",
     "tailwind": "tailwindcss -i src/styles/tailwind.css -o src/styles/output.css --watch",
-    "tailwind:build": "tailwindcss -i styles/tailwind.css -o tailwind/output.css --minify",
-    "storybook": "start-storybook --quiet -p 6006 -s public",
-    "storybook:build": "build-storybook -s public"
+    "tailwind:build": "tailwindcss -i src/styles/tailwind.css -o src/styles/output.css",
+    "storybook": "start-storybook --quiet -p 6006 -s src/assets",
+    "storybook:build": "yarn tailwind:build && build-storybook --docs -c .storybook -o docs -s src/assets"
+  },
+  "resolutions": {
+    "mini-css-extract-plugin": "2.4.5"
   },
   "peerDependencies": {
     "react": ">=17.0.2",
