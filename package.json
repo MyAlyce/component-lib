@@ -3,32 +3,75 @@
   "version": "0.1.0",
   "author": "Dovydas Stirpeika <Dovy91@gmail.com>",
   "license": "MIT",
-  "devDependencies": {
-    "@babel/core": "^7.16.7",
-    "@storybook/addon-actions": "^6.4.12",
-    "@storybook/addon-essentials": "^6.4.12",
-    "@storybook/addon-links": "^6.4.12",
-    "@storybook/react": "^6.4.12",
-    "@testing-library/jest-dom": "^5.16.1",
-    "@testing-library/react": "^12.1.2",
-    "@types/jest": "^27.4.0",
-    "babel-loader": "^8.2.3",
-    "identity-obj-proxy": "^3.0.0",
-    "jest": "^27.4.7",
-    "react": "^17.0.2",
-    "react-dom": "^17.0.2",
-    "ts-jest": "^27.1.2",
-    "typescript": "^4.5.4"
+  "scripts": {
+    "start": "concurrently \"yarn:storybook\" \"yarn:test:watch\" \"yarn:tailwind\" -k --kill-others-on-fail -p \"{name}|\" -n \"SB,JT,TW\" -c \"magenta,yellow,cyan\"",
+    "test": "react-scripts test",
+    "test:watch": "react-scripts test --watchAll",
+    "eject": "react-scripts eject",
+    "tailwind": "tailwindcss -i src/styles/tailwind.css -o src/styles/output.css --watch",
+    "tailwind:build": "tailwindcss -i styles/tailwind.css -o tailwind/output.css --minify",
+    "storybook": "start-storybook --quiet -p 6006 -s public",
+    "storybook:build": "build-storybook -s public"
   },
   "peerDependencies": {
     "react": ">=17.0.2",
     "react-dom": ">=17.0.2"
   },
-  "dependencies": {},
-  "scripts": {
-    "storybook": "start-storybook -p 6006",
-    "build-storybook": "build-storybook",
-    "test": "jest",
-    "test:watch": "jest --watch"
+  "dependencies": {
+    "tslib": "~2.3.1"
+  },
+  "devDependencies": {
+    "@storybook/addon-actions": "^6.4.13",
+    "@storybook/addon-essentials": "^6.4.13",
+    "@storybook/addon-links": "^6.4.13",
+    "@storybook/builder-webpack5": "^6.4.13",
+    "@storybook/manager-webpack5": "^6.4.13",
+    "@storybook/node-logger": "^6.4.13",
+    "@storybook/preset-create-react-app": "^4.0.0",
+    "@storybook/react": "^6.4.13",
+    "@testing-library/jest-dom": "^5.14.1",
+    "@testing-library/react": "^12.0.0",
+    "@testing-library/user-event": "^13.2.1",
+    "@types/jest": "^27.0.1",
+    "@types/node": "^16.7.13",
+    "@types/react-dom": "^17.0.9",
+    "@types/react": "^17.0.20",
+    "autoprefixer": "^10.4.2",
+    "concurrently": "^7.0.0",
+    "postcss-loader": "^6.2.1",
+    "postcss": "^8.4.5",
+    "react-dom": "^17.0.2",
+    "react-scripts": "5.0.0",
+    "react": "^17.0.2",
+    "typescript": "^4.4.2",
+    "webpack": "^5.66.0"
+  },
+  "eslintConfig": {
+    "extends": [
+      "react-app",
+      "react-app/jest"
+    ],
+    "overrides": [
+      {
+        "files": [
+          "**/*.stories.*"
+        ],
+        "rules": {
+          "import/no-anonymous-default-export": "off"
+        }
+      }
+    ]
+  },
+  "browserslist": {
+    "production": [
+      ">0.2%",
+      "not dead",
+      "not op_mini all"
+    ],
+    "development": [
+      "last 1 chrome version",
+      "last 1 firefox version",
+      "last 1 safari version"
+    ]
   }
 }

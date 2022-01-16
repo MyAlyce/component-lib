@@ -1,6 +1,7 @@
+import '../src/styles/output.css';
+
 export const parameters = {
   actions: { argTypesRegex: "^on[A-Z].*" },
-  viewMode: 'docs',
   controls: {
     matchers: {
       color: /(background|color)$/i,

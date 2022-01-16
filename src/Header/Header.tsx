@@ -3,7 +3,7 @@ import React from 'react';
 import { Button } from '../Button/Button';
 import './header.css';
 
-interface HeaderProps {
+export interface HeaderProps {
   user?: {};
   onLogin: () => void;
   onLogout: () => void;
@@ -14,6 +14,9 @@ export const Header = ({ user, onLogin, onLogout, onCreateAccount }: HeaderProps
   <header>
     <div className="wrapper">
       <div>
+      <h1 className="text-3xl font-bold underline">
+    Hello world!
+  </h1>
         <svg width="32" height="32" viewBox="0 0 32 32" xmlns="http://www.w3.org/2000/svg">
           <g fill="none" fillRule="evenodd">
             <path
