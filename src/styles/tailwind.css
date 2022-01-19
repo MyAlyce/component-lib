@@ -22,8 +22,3 @@
         transition-all duration-100 scale-0 origin-left
     }
 }
-
-.icon svg {
-    width: 100%;
-    height: auto;
-}

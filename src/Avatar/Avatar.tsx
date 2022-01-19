@@ -1,8 +1,8 @@
 import React from 'react';
 
-// TODO: use animate-ping
+// TODO: use 'animate-ping'
 
 // create a loading state for avatars
-export const Avatar = () => {
+export const Avatar = () =>  ({
 
-};
+});
