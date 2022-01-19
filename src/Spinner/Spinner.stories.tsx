@@ -6,7 +6,9 @@ import { Spinner } from './Spinner';
 const meta: ComponentMeta<typeof Spinner> = {
     title: 'Component/Spinner',
     component: Spinner,
-    // argTypes
+    args: {
+        size: 'sm'
+    }
 };
 
 export default meta;
@@ -14,17 +16,18 @@ export default meta;
 const Template: ComponentStory<typeof Spinner> = (args) => <Spinner {...args} />;
 
 export const Example = Template.bind({});
-Example.args = {
-//   size: 'md',
-};
 
-export const AutoWidth = Template.bind({});
-AutoWidth.decorators = [Story => (
-    <div style={{ border: 'solid 1px black', width: 100, margin: 'auto', height: 50 }}>
+export const AutoSize = Template.bind({});
+AutoSize.decorators = [Story => (
+    <>
+    <h3>(Resize The Box:)</h3>
+    <div style={{ margin: 'auto', border: 'solid 2px', width: 150, height: 100, resize: 'both', overflow: 'auto' }}>
+        
         <Story />
     </div>
+    </>
 )];
-AutoWidth.args = {
-    size: 'auto-width',
+AutoSize.args = {
+    size: 'auto',
 };
 
