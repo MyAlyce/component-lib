@@ -6,15 +6,15 @@ import { rand } from '@giveback007/util-lib';
 
 const getStatus = () => (['online', 'offline', 'away', 'busy', undefined] as const)[rand(0, 5)];
 const getBadge = () => [3, 47, 1000, true, false, undefined][rand(0, 6)];
+
 const args: AvatarProps = {
+    dataState: 'done',
     size: 'lg',
-    user: {
-        name: 'Jon Doe',
-        status: getStatus(),
-        imgSrc: 'https://randomuser.me/api/portraits/men/31.jpg',
-        badge: getBadge(),
-    }
-};
+    name: 'Jon Doe',
+    status: getStatus(),
+    imgSrc: 'https://randomuser.me/api/portraits/men/31.jpg',
+    badge: getBadge()
+} as const;
 
 const meta: ComponentMeta<typeof Avatar> = {
     title: 'Component/Avatar',
@@ -25,6 +25,7 @@ const meta: ComponentMeta<typeof Avatar> = {
     },
     args,
     argTypes: {
+        // onClick: { defaultValue: undefined, type: 'function' }
     }
 };
 
@@ -37,15 +38,20 @@ export const Example = Template.bind({});
 export const Loading = Template.bind({});
 Loading.args = {
     size: 'lg',
-    user: 'loading',
+    dataState: 'loading'
 };
 
 export const Error = Template.bind({});
 Error.args = {
     size: 'lg',
-    user: 'error',
+    dataState: 'error',
 };
 
+export const NoImage = Template.bind({});
+NoImage.args = {
+    ...args,
+    imgSrc: undefined
+};
 
 // interface RandomUser {
 //     results: {

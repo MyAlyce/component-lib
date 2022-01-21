@@ -1,41 +1,36 @@
 import { isType } from '@giveback007/util-lib';
 import React, { MouseEventHandler, useState } from 'react';
-import type { Size } from '..';
+import type { DataState, Size } from '..';
 import { Spinner } from '../Spinner/Spinner';
 import { cssSizeMap } from '../utils';
 
 import errSvg from './avatar-error.svg';
 
-// TODO:
-    // * use 'animate-ping'
-    // * use 'React Suspense'
-
 export type AvatarStatus = 'online' | 'offline' | 'away' | 'busy';
-export type AvatarUser = {
+
+export type AvatarProps = {
+    dataState: DataState;
     imgSrc?: string;
-    name: { first: string, last: string } | string;
+    name?: { first: string, last: string } | string;
     backgroundColor?: string;
     status?: AvatarStatus;
     badge?: boolean | number;
-};
-
-export type AvatarProps = {
-    user: AvatarUser | 'loading' | 'error';
     size: Size;
     onClick?: MouseEventHandler;
 };
 
 export const Avatar = (p: AvatarProps) => {
-    const { user } = p;
+    const { dataState, imgSrc, backgroundColor, status, badge, size, onClick } = p;
     
     const { name, initials } = (() => {
-        if (isType(user, 'string')) return {
+        if (dataState === 'loading' || dataState === 'error') return {
             initials: '',
-            name: user === 'error' ? "Couldn't Load User" : user === 'loading' ? 'Loading...' : ''
+            name: dataState === 'error' ? "Couldn't Load User" : dataState === 'loading' ? 'Loading...' : ''
         };
 
-        const { name } = user;
-        if (isType(name, 'string')) {
+        let { name } = p;
+        if (isType(name, 'string') || !name) {
+            name = name || '';
             return { initials: name.substring(0, 2), name };
         } else {
             const { first, last } = name;
@@ -45,31 +40,28 @@ export const Avatar = (p: AvatarProps) => {
             };
         }
     })();
-
-    const sz = cssSizeMap[p.size];
-    const bgColor = isType(user, 'object') && user.backgroundColor;
-    //text-[50px]
+    console.log(onClick)
     return <div
-        onClick={p.onClick}
+        onClick={onClick}
         className={`
             flex relative justify-center items-center
-            m-1 mr-2 rounded-full text-white${bgColor || user === 'loading' ? '' : ' bg-secondary-500'}
-            ${user === 'loading' ? ' overflow-hidden' : ''}
-            ${sz} ${p.onClick ? ' cursor-pointer' : ''}
+            m-1 mr-2 rounded-full text-white${backgroundColor || dataState === 'loading' ? '' : ' bg-secondary-500'}
+            ${dataState === 'loading' ? ' overflow-hidden' : ''}
+            ${cssSizeMap[size]} ${onClick ? ' cursor-pointer' : ''}
         `}
-        title={user === 'error' ? "Couldn't Load User" : user === 'loading' ? 'Loading...' : name}
-        style={bgColor ? { backgroundColor: bgColor } : {}}
+        title={dataState === 'error' ? "Couldn't Load User" : dataState === 'loading' ? 'Loading...' : name}
+        style={{ backgroundColor }}
     >
-        <AvatarInner user={isType(user, 'object') ? {...user, name, initials} : user} size={p.size} />
+        <AvatarInner {...{ dataState, imgSrc, badge, size, initials, status }} />
     </div>;
 };
 
-const AvatarInner = ({ user, size }: { size: Size; user: 'loading' | 'error' | AvatarUser & { initials: string; name: string }}) => {
-    if (user === 'loading') return <Spinner size='auto' type='pulse' />;
+const avatarFontSize = { xs: 'text-sm', sm: 'text-xl', md: 'text-4xl', lg: 'text-7xl', xl: 'text-9xl' } as const;
+const AvatarInner = (p: { dataState: DataState, size: Size; initials: string, imgSrc?: string, status?: AvatarStatus, badge?: boolean | number }) => {
+    if (p.dataState === 'loading') return <Spinner size='auto' type='pulse' />;
+    if (p.dataState === 'error') return <img src={errSvg} className='rounded-full h-full w-full' />;
 
-    if (user === 'error') return <img src={errSvg} className='rounded-full h-full w-full' />;
-
-    const { initials, imgSrc, status, badge } = user;
+    const { initials, imgSrc, status, badge, size } = p;
     const [imgStatus, setImgStatus] = useState<'loading' | 'error' | 'success'>(imgSrc ? 'loading' : 'error');
     return <>
         {/* Badge */}
@@ -77,7 +69,7 @@ const AvatarInner = ({ user, size }: { size: Size; user: 'loading' | 'error' | A
         
         {/* User image */}
         {imgStatus === 'error' ? 
-            initials
+            <span className={avatarFontSize[size]}>{initials}</span>
             :
             <img
                 className="rounded-full h-full w-full"
@@ -93,10 +85,10 @@ const AvatarInner = ({ user, size }: { size: Size; user: 'loading' | 'error' | A
 };
 
 const badgeSize = { xs: 'h-2 min-w-2', sm: 'h-3 min-w-3', md: 'h-4 min-w-4', lg: 'h-6 min-w-6', xl: 'h-12 min-w-12' } as const;
-const fontSize = { md: 'text-xs', lg: 'text-base', xl: 'text-2xl' } as const;
+const badgeFontSize = { md: 'text-xs', lg: 'text-base', xl: 'text-2xl' } as const;
 const Badge = ({ size, badge }: { size: Size, badge?:  boolean | number }) =>
     badge ? <div className={`bg-info-600 rounded-full absolute top-0 right-0 pl-1 pr-1 flex justify-center ${badgeSize[size]}`}>
-        {(isType(badge, 'number') && size !== 'sm' && size !== 'xs') && <span className={`m-auto ${fontSize[size]}`}>{badge > 999 ? '+999' : badge}</span>}
+        {(isType(badge, 'number') && size !== 'sm' && size !== 'xs') && <span className={`m-auto ${badgeFontSize[size]}`}>{badge > 999 ? '+999' : badge}</span>}
     </div> : null;
 
 const statusSize = { xs: 'h-2 w-2', sm: 'h-3 w-3', md: 'h-4 w-4', lg: 'h-6 w-6', xl: 'h-12 w-12' } as const;
