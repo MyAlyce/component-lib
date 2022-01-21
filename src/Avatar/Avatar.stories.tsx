@@ -1,19 +1,15 @@
 import React from 'react';
 import type { ComponentStory, ComponentMeta } from '@storybook/react';
-
 import { Avatar, AvatarProps } from './Avatar';
-import { rand } from '@giveback007/util-lib';
-
-const getStatus = () => (['online', 'offline', 'away', 'busy', undefined] as const)[rand(0, 5)];
-const getBadge = () => [3, 47, 1000, true, false, undefined][rand(0, 6)];
+import { avatarUtils } from '../stories.utils';
 
 const args: AvatarProps = {
     dataState: 'done',
     size: 'lg',
     name: 'Jon Doe',
-    status: getStatus(),
-    imgSrc: 'https://randomuser.me/api/portraits/men/31.jpg',
-    badge: getBadge()
+    status: avatarUtils.getStatus(),
+    imgSrc: avatarUtils.getImg(),
+    badge: avatarUtils.getBadge()
 } as const;
 
 const meta: ComponentMeta<typeof Avatar> = {

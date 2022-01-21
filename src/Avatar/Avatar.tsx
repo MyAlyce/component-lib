@@ -22,25 +22,17 @@ export type AvatarProps = {
 export const Avatar = (p: AvatarProps) => {
     const { dataState, imgSrc, backgroundColor, status, badge, size, onClick } = p;
     
-    const { name, initials } = (() => {
-        if (dataState === 'loading' || dataState === 'error') return {
-            initials: '',
-            name: dataState === 'error' ? "Couldn't Load User" : dataState === 'loading' ? 'Loading...' : ''
-        };
-
-        let { name } = p;
-        if (isType(name, 'string') || !name) {
-            name = name || '';
-            return { initials: name.substring(0, 2), name };
-        } else {
-            const { first, last } = name;
-            return {
-                initials: `${first[0].toUpperCase()}${last[0].toUpperCase()}`,
-                name: `${first} ${last}`
-            };
-        }
+    const name = (() => {
+        if (dataState === 'loading' || dataState === 'error')
+            return dataState === 'error' ? "Couldn't Load User" : dataState === 'loading' ? 'Loading...' : '';
+        
+        if (isType(p.name, 'string') || !p.name)
+            return p.name || '';
+            
+        const { first, last } = p.name;
+        return `${first} ${last}`;
     })();
-    console.log(onClick)
+    
     return <div
         onClick={onClick}
         className={`
@@ -52,17 +44,28 @@ export const Avatar = (p: AvatarProps) => {
         title={dataState === 'error' ? "Couldn't Load User" : dataState === 'loading' ? 'Loading...' : name}
         style={{ backgroundColor }}
     >
-        <AvatarInner {...{ dataState, imgSrc, badge, size, initials, status }} />
+        <AvatarInner {...{ dataState, imgSrc, badge, size, status, name }} />
     </div>;
 };
 
+export type AvatarInnerProps = {
+    dataState: DataState,
+    size: Size;
+    imgSrc?: string,
+    status?: AvatarStatus,
+    badge?: boolean | number, name: AvatarProps['name']
+}
+
 const avatarFontSize = { xs: 'text-sm', sm: 'text-xl', md: 'text-4xl', lg: 'text-7xl', xl: 'text-9xl' } as const;
-const AvatarInner = (p: { dataState: DataState, size: Size; initials: string, imgSrc?: string, status?: AvatarStatus, badge?: boolean | number }) => {
+export const AvatarInner = (p: AvatarInnerProps) => {
     if (p.dataState === 'loading') return <Spinner size='auto' type='pulse' />;
     if (p.dataState === 'error') return <img src={errSvg} className='rounded-full h-full w-full' />;
 
-    const { initials, imgSrc, status, badge, size } = p;
+    const { imgSrc, status, badge, size, name = '' } = p;
     const [imgStatus, setImgStatus] = useState<'loading' | 'error' | 'success'>(imgSrc ? 'loading' : 'error');
+
+    const initials = isType(name, 'string') ? name.substring(0, 2) : `${name.first[0].toUpperCase()}${name.last[0].toUpperCase()}`;
+
     return <>
         {/* Badge */}
         <Badge size={size} badge={badge} />
