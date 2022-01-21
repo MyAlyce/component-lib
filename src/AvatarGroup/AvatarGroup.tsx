@@ -1,6 +1,6 @@
-import React, { MouseEventHandler, useState } from 'react';
+import React, { MouseEventHandler } from 'react';
 import type { DataState, Size } from "..";
-import { Avatar, AvatarInner, AvatarInnerProps, AvatarStatus } from "../Avatar/Avatar";
+import { AvatarInner, AvatarInnerProps, AvatarStatus } from "../Avatar/Avatar";
 import { cssSizeMap } from '../utils';
 
 export type AvatarGroupProps = {
