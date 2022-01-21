@@ -1,5 +1,5 @@
-import { wait } from '@giveback007/util-lib';
-import React, { MouseEventHandler, useEffect, useState } from 'react';
+import { isType } from '@giveback007/util-lib';
+import React, { MouseEventHandler, useState } from 'react';
 import type { Size } from '..';
 import { Spinner } from '../Spinner/Spinner';
 import { cssSizeMap } from '../utils';
@@ -16,7 +16,7 @@ export type AvatarUser = {
     name: { first: string, last: string } | string;
     backgroundColor?: string;
     status?: AvatarStatus;
-    // badge?: boolean | number;
+    badge?: boolean | number;
 };
 
 export type AvatarProps = {
@@ -26,17 +26,16 @@ export type AvatarProps = {
 };
 
 export const Avatar = (p: AvatarProps) => {
-    
     const { user } = p;
-    console.log(user);
     
     const { name, initials } = (() => {
-        if (typeof user !== 'object') return {
+        if (isType(user, 'string')) return {
             initials: '',
             name: user === 'error' ? "Couldn't Load User" : user === 'loading' ? 'Loading...' : ''
         };
+
         const { name } = user;
-        if (typeof name === 'string') {
+        if (isType(name, 'string')) {
             return { initials: name.substring(0, 2), name };
         } else {
             const { first, last } = name;
@@ -48,7 +47,7 @@ export const Avatar = (p: AvatarProps) => {
     })();
 
     const sz = cssSizeMap[p.size];
-    const bgColor = typeof user === 'object' && user.backgroundColor;
+    const bgColor = isType(user, 'object') && user.backgroundColor;
     //text-[50px]
     return <div
         onClick={p.onClick}
@@ -61,7 +60,7 @@ export const Avatar = (p: AvatarProps) => {
         title={user === 'error' ? "Couldn't Load User" : user === 'loading' ? 'Loading...' : name}
         style={bgColor ? { backgroundColor: bgColor } : {}}
     >
-        <AvatarInner user={typeof user === 'object' ? {...user, name, initials} : user} size={p.size} />
+        <AvatarInner user={isType(user, 'object') ? {...user, name, initials} : user} size={p.size} />
     </div>;
 };
 
@@ -70,11 +69,11 @@ const AvatarInner = ({ user, size }: { size: Size; user: 'loading' | 'error' | A
 
     if (user === 'error') return <img src={errSvg} className='rounded-full h-full w-full' />;
 
-    const { initials, imgSrc, status } = user;
+    const { initials, imgSrc, status, badge } = user;
     const [imgStatus, setImgStatus] = useState<'loading' | 'error' | 'success'>(imgSrc ? 'loading' : 'error');
     return <>
         {/* Badge */}
-        {/* <div className="bg-green-500 rounded-full w-2 h-2 absolute top-0 right-0"></div> */}
+        <Badge size={size} badge={badge} />
         
         {/* User image */}
         {imgStatus === 'error' ? 
@@ -82,7 +81,7 @@ const AvatarInner = ({ user, size }: { size: Size; user: 'loading' | 'error' | A
             :
             <img
                 className="rounded-full h-full w-full"
-                src={user.imgSrc}
+                src={imgSrc}
                 onLoad={() => setImgStatus('success')}
                 onError={() => setImgStatus('error')}
             />
@@ -92,7 +91,13 @@ const AvatarInner = ({ user, size }: { size: Size; user: 'loading' | 'error' | A
         {status && <Status size={size} status={status} />}
     </>;
 };
-    
+
+const badgeSize = { xs: 'h-2 min-w-2', sm: 'h-3 min-w-3', md: 'h-4 min-w-4', lg: 'h-6 min-w-6', xl: 'h-12 min-w-12' } as const;
+const fontSize = { md: 'text-xs', lg: 'text-base', xl: 'text-2xl' } as const;
+const Badge = ({ size, badge }: { size: Size, badge?:  boolean | number }) =>
+    badge ? <div className={`bg-info-600 rounded-full absolute top-0 right-0 pl-1 pr-1 flex justify-center ${badgeSize[size]}`}>
+        {(isType(badge, 'number') && size !== 'sm' && size !== 'xs') && <span className={`m-auto ${fontSize[size]}`}>{badge > 999 ? '+999' : badge}</span>}
+    </div> : null;
 
 const statusSize = { xs: 'h-2 w-2', sm: 'h-3 w-3', md: 'h-4 w-4', lg: 'h-6 w-6', xl: 'h-12 w-12' } as const;
 const statusColor = { online: 'bg-success-500', offline: 'bg-danger-500', busy: 'bg-warning-500', away: 'bg-secondary-500' };
@@ -100,62 +105,3 @@ const Status = (p: { size: Size, status: AvatarStatus }) => <span className="fle
     {p.status === 'online' && <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-success-400 opacity-75"></span>}
     <span className={`relative inline-flex rounded-full ${statusColor[p.status]} ${statusSize[p.size]}`}></span>
 </span>;
-    // <div className={`rounded-full absolute bottom-0 right-0 ${statusSize[p.size]} ${statusColor[p.status]}`}></div>;
-
-
-// const AvatarOld1 = (p: AvatarProps) =>
-//     <figure
-//         className={`avatar avatar-${p.size} ${p.badge ? ' badge' : ''} ${(p.onClick) ? 'clickable' : '' }`}
-//         data-initial={p.img.initials}
-//         data-badge={(isType(p.badge, 'number') && p.badge) || undefined}
-//         style={{ backgroundColor: p.img.backgroundColor, ...(p.style || {}) }}
-//         onClick={p.onClick}
-//     >
-//         {p.img.src && <img src={p.img.src}/>}
-//         {p.status && <i className={`avatar-presence ${p.status}`} />}
-//     </figure>;
-
-// create a loading state for avatars
-export const AvatarOld2 = (_p: { x: string }) =>  <>
-
-<div className="flex justify-center">
-    <div className="flex relative w-12 h-12 bg-orange-500 justify-center items-center m-1 mr-2 text-xl rounded-full text-white">U </div>
-    <div className="flex relative w-12 h-12 bg-green-500 justify-center items-center m-1 mr-2 text-xl rounded-full text-white">F </div>
-    <div className="flex relative w-12 h-12 bg-purple-500 justify-center items-center m-1 mr-2 text-xl rounded-full text-white">XY </div>
-    <div className="flex relative w-12 h-12 bg-pink-500 justify-center items-center m-1 mr-2 text-xl rounded-full text-white">
-        <svg xmlns="http://www.w3.org/2000/svg" width="100%" height="100%" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" className="feather feather-mail w-8">
-            <path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"></path>
-            <polyline points="22,6 12,13 2,6"></polyline>
-        </svg>
-    </div>
-</div>
-
-<div className="flex justify-center mt-10">
-    <div className="flex relative w-8 h-8 justify-center items-center m-1 mr-2 text-xl rounded-full text-white"><img className="rounded-full" alt="A" src="https://randomuser.me/api/portraits/women/68.jpg"/> </div>
-    <div className="flex relative w-10 h-10 justify-center items-center m-1 mr-2 text-xl rounded-full text-white"><img className="rounded-full" alt="A" src="https://randomuser.me/api/portraits/women/68.jpg"/> </div>
-    <div className="flex relative w-12 h-12 justify-center items-center m-1 mr-2 text-xl rounded-full text-white"><img className="rounded-full" alt="A" src="https://randomuser.me/api/portraits/women/68.jpg"/> </div>
-    <div className="flex relative w-16 h-16 justify-center items-center m-1 mr-2 text-xl rounded-full text-white"><img className="rounded-full" alt="A" src="https://randomuser.me/api/portraits/women/68.jpg"/> </div>
-    <div className="flex relative w-20 h-20 justify-center items-center m-1 mr-2 text-xl rounded-full text-white"><img className="rounded-full" alt="A" src="https://randomuser.me/api/portraits/women/68.jpg"/> </div>
-</div>
-
-<div className="flex justify-center mt-10">
-    <div className="flex relative w-12 h-12 bg-orange-500 justify-center items-center m-1 mr-2 text-xl rounded-full text-white"><img className="rounded-full" alt="A" src="https://randomuser.me/api/portraits/men/62.jpg" />
-        <div className="bg-green-500 rounded-full w-3 h-3 absolute bottom-0 right-0"></div>
-    </div>
-    <div className="flex relative w-12 h-12 bg-orange-500 justify-center items-center m-1 mr-2 text-xl rounded-full text-white"><img className="rounded-full" alt="A" src="https://randomuser.me/api/portraits/women/68.jpg" />
-        <div className="bg-red-500 rounded-full w-3 h-3 absolute bottom-0 right-0"></div>
-    </div>
-    <div className="flex relative w-12 h-12 bg-orange-500 justify-center items-center m-1 mr-2 text-xl rounded-full text-white"><img className="rounded-full" alt="A" src="https://randomuser.me/api/portraits/women/75.jpg" />
-        <div className="bg-orange-500 rounded-full w-3 h-3 absolute bottom-0 right-0"></div>
-    </div>
-</div>
-
-<div className="flex flex-row-reverse justify-center mt-10">
-    <div className="flex relative w-10 h-10 bg-gray-500 justify-center items-center m-1 mr-2 -ml-3 rounded-full border-r-2 border-white text-xl text-white">+5 </div>
-    <div className="flex relative w-10 h-10 justify-center items-center m-1 mr-2 -ml-3 rounded-full border-r-2 border-white"><img className="rounded-full" alt="A" src="https://randomuser.me/api/portraits/women/68.jpg" /> </div>
-    <div className="flex relative w-10 h-10 justify-center items-center m-1 mr-2 -ml-3 rounded-full border-r-2 border-white"><img className="rounded-full" alt="A" src="https://randomuser.me/api/portraits/women/68.jpg" /> </div>
-    <div className="flex relative w-10 h-10 justify-center items-center m-1 mr-2 -ml-3 rounded-full border-r-2 border-white"><img className="rounded-full" alt="A" src="https://randomuser.me/api/portraits/women/68.jpg" /> </div>
-    <div className="flex relative w-10 h-10 justify-center items-center m-1 mr-2 -ml-3 rounded-full border-r-2 border-white"><img className="rounded-full" alt="A" src="https://randomuser.me/api/portraits/women/68.jpg" /> </div>
-    <div className="flex relative w-10 h-10 justify-center items-center m-1 mr-2 -ml-3 rounded-full border-r-2 border-white"><img className="rounded-full" alt="A" src="https://randomuser.me/api/portraits/women/68.jpg" /> </div>
-</div>
-</>

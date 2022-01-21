@@ -499,8 +499,6 @@ Ensure the default browser behavior of the `hidden` attribute.
   left: 3.5rem;
   margin: 0.5rem;
   width: auto;
-  min-width: -webkit-max-content;
-  min-width: max-content;
   -webkit-transform-origin: left;
           transform-origin: left;
   --tw-scale-x: 0;
@@ -560,6 +558,10 @@ Ensure the default browser behavior of the `hidden` attribute.
   margin: 0px;
 }
 
+.m-auto {
+  margin: auto;
+}
+
 .mr-2 {
   margin-right: 0.5rem;
 }
@@ -578,10 +580,6 @@ Ensure the default browser behavior of the `hidden` attribute.
 
 .inline-flex {
   display: inline-flex;
-}
-
-.table {
-  display: table;
 }
 
 .h-6 {
@@ -692,6 +690,26 @@ Ensure the default browser behavior of the `hidden` attribute.
   width: 5rem;
 }
 
+.min-w-2 {
+  min-width: 0.25rem;
+}
+
+.min-w-3 {
+  min-width: 0.75rem;
+}
+
+.min-w-4 {
+  min-width: 1rem;
+}
+
+.min-w-6 {
+  min-width: 1.5rem;
+}
+
+.min-w-12 {
+  min-width: 3rem;
+}
+
 .transform {
   -webkit-transform: translate(var(--tw-translate-x), var(--tw-translate-y)) rotate(var(--tw-rotate)) skewX(var(--tw-skew-x)) skewY(var(--tw-skew-y)) scaleX(var(--tw-scale-x)) scaleY(var(--tw-scale-y));
           transform: translate(var(--tw-translate-x), var(--tw-translate-y)) rotate(var(--tw-rotate)) skewX(var(--tw-skew-x)) skewY(var(--tw-skew-y)) scaleX(var(--tw-scale-x)) scaleY(var(--tw-scale-y));
@@ -778,6 +796,10 @@ Ensure the default browser behavior of the `hidden` attribute.
   justify-content: center;
 }
 
+.justify-items-center {
+  justify-items: center;
+}
+
 .overflow-hidden {
   overflow: hidden;
 }
@@ -804,9 +826,9 @@ Ensure the default browser behavior of the `hidden` attribute.
   background-color: rgb(113 113 122 / var(--tw-bg-opacity));
 }
 
-.bg-green-500 {
+.bg-info-600 {
   --tw-bg-opacity: 1;
-  background-color: rgb(34 197 94 / var(--tw-bg-opacity));
+  background-color: rgb(8 145 178 / var(--tw-bg-opacity));
 }
 
 .bg-success-500 {
@@ -832,6 +854,11 @@ Ensure the default browser behavior of the `hidden` attribute.
 .bg-orange-500 {
   --tw-bg-opacity: 1;
   background-color: rgb(249 115 22 / var(--tw-bg-opacity));
+}
+
+.bg-green-500 {
+  --tw-bg-opacity: 1;
+  background-color: rgb(34 197 94 / var(--tw-bg-opacity));
 }
 
 .bg-purple-500 {
@@ -864,9 +891,42 @@ Ensure the default browser behavior of the `hidden` attribute.
   background-color: rgb(161 161 170 / var(--tw-bg-opacity));
 }
 
+.pl-1 {
+  padding-left: 0.25rem;
+}
+
+.pr-1 {
+  padding-right: 0.25rem;
+}
+
 .text-xl {
   font-size: 1.25rem;
   line-height: 1.75rem;
+}
+
+.text-xs {
+  font-size: 0.75rem;
+  line-height: 1rem;
+}
+
+.text-sm {
+  font-size: 0.875rem;
+  line-height: 1.25rem;
+}
+
+.text-base {
+  font-size: 1rem;
+  line-height: 1.5rem;
+}
+
+.text-lg {
+  font-size: 1.125rem;
+  line-height: 1.75rem;
+}
+
+.text-2xl {
+  font-size: 1.5rem;
+  line-height: 2rem;
 }
 
 .text-white {

@@ -16,9 +16,17 @@ module.exports = {
         warning: colors.amber,
       }
     },
+    minWidth: {
+      '2': '0.25rem',
+      '3': '0.75rem',
+      '4': '1rem',
+      '6': '1.5rem',
+      '12': '3rem',
+    }
   },
   plugins: [
     // require('@tailwindcss/forms'),
     // require('@tailwindcss/typography'),
   ]
 };
+    
