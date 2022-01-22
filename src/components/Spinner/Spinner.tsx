@@ -1,6 +1,6 @@
-import type { Size } from '..';
+import type { Size } from '../..';
 import React from 'react';
-import { cssSizeMap } from '../utils';
+import { cssSizeMap } from '../../utils';
 
 import l1 from './svg/spinner-1.svg';
 import l2 from './svg/spinner-2.svg';

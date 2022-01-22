@@ -1,5 +1,5 @@
 import React, { useState, HTMLAttributes } from 'react';
-import type { ColorTypes, ObjMap, Size } from '..';
+import type { ColorTypes, ObjMap, Size } from '../..';
 import { Badge } from '../Badge/Badge';
 
 export interface ButtonProps {

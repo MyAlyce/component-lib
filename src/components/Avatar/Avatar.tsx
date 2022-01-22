@@ -1,11 +1,11 @@
 import { isType } from '@giveback007/util-lib';
 import React, { MouseEventHandler, useState } from 'react';
-import type { DataState, Size } from '..';
+import type { DataState, Size } from '../..';
 import { Badge } from '../Badge/Badge';
-import { Spinner } from '../Spinner/Spinner';
-import { cssSizeMap } from '../utils';
+import { cssSizeMap } from '../../utils';
 
 import errSvg from './avatar-error.svg';
+import { Spinner } from '../Spinner/Spinner';
 
 export type AvatarStatus = 'online' | 'offline' | 'away' | 'busy';
 

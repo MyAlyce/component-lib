@@ -1,6 +1,6 @@
 import { isType } from '@giveback007/util-lib';
 import React, { HTMLAttributes } from 'react';
-import type { Size } from '../general.types';
+import type { Size } from '../../general.types';
 
 // TODO: inline badges
 

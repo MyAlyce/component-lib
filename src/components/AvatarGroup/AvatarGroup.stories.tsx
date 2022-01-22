@@ -2,7 +2,7 @@ import React from "react";
 import type { ComponentMeta, ComponentStory } from "@storybook/react";
 import { AvatarGroup, AvatarGroupProps } from "./AvatarGroup";
 import { arrGen, rand } from "@giveback007/util-lib";
-import { avatarUtils } from "../stories.utils";
+import { avatarUtils } from "../../stories.utils";
 
 const args: AvatarGroupProps = {
     avatars: arrGen(rand(5, 12)).map(() => ({

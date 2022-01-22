@@ -1,7 +1,7 @@
 import React from 'react';
 import type { ComponentStory, ComponentMeta } from '@storybook/react';
 import { Avatar, AvatarProps } from './Avatar';
-import { avatarUtils } from '../stories.utils';
+import { avatarUtils } from '../../stories.utils';
 
 const args: AvatarProps = {
     dataState: 'done',
