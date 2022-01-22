@@ -25,8 +25,11 @@ const Template: ComponentStory<typeof Badge> = (args) => <Badge {...args} />;
 export const Example = Template.bind({});
 
 export const Boolean = Template.bind({});
-Boolean.args = { size: 'xl', badge: true };
+Boolean.args = { size: 'lg', badge: true };
 Boolean.argTypes = {
     badge: { defaultValue: true, type: 'boolean' }
 };
+
+export const Over999 = Template.bind({});
+Over999.args = { size: 'lg', badge: 1000 };
 
