@@ -14,7 +14,7 @@ const meta: ComponentMeta<typeof SideBar> = {
   decorators: [Story => <div style={{
     transform: 'scale(1)',
     height: '100vh',
-  }}>{<Story />}</div>],
+  }}>{Story()}</div>],
   
 };
 

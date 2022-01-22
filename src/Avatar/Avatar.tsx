@@ -1,6 +1,7 @@
 import { isType } from '@giveback007/util-lib';
 import React, { MouseEventHandler, useState } from 'react';
 import type { DataState, Size } from '..';
+import { Badge } from '../Badge/Badge';
 import { Spinner } from '../Spinner/Spinner';
 import { cssSizeMap } from '../utils';
 
@@ -87,12 +88,7 @@ export const AvatarInner = (p: AvatarInnerProps) => {
     </>;
 };
 
-const badgeSize = { xs: 'h-2 min-w-2', sm: 'h-3 min-w-3', md: 'h-4 min-w-4', lg: 'h-6 min-w-6', xl: 'h-12 min-w-12' } as const;
-const badgeFontSize = { md: 'text-xs', lg: 'text-base', xl: 'text-2xl' } as const;
-const Badge = ({ size, badge }: { size: Size, badge?:  boolean | number }) =>
-    badge ? <div className={`bg-info-600 rounded-full absolute top-0 right-0 pl-1 pr-1 flex justify-center ${badgeSize[size]}`}>
-        {(isType(badge, 'number') && size !== 'sm' && size !== 'xs') && <span className={`m-auto ${badgeFontSize[size]}`}>{badge > 999 ? '+999' : badge}</span>}
-    </div> : null;
+
 
 const statusSize = { xs: 'h-2 w-2', sm: 'h-3 w-3', md: 'h-4 w-4', lg: 'h-6 w-6', xl: 'h-12 w-12' } as const;
 const statusColor = { online: 'bg-success-500', offline: 'bg-danger-500', busy: 'bg-warning-500', away: 'bg-secondary-500' };
