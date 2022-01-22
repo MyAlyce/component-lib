@@ -12,7 +12,7 @@ const args: AvatarGroupProps = {
     })),
     size: 'md',
     maxShow: 3
-}
+};
 
 const meta: ComponentMeta<typeof AvatarGroup> = {
     title: 'Component/AvatarGroup',
@@ -25,4 +25,4 @@ export default meta;
 const Template: ComponentStory<typeof AvatarGroup> = (args) => <AvatarGroup {...args} />;
 
 export const Example = Template.bind({});
-Example.args
+// Example.args
