@@ -25,7 +25,7 @@ export type SpinnerProps = {
 
 export const Spinner = ({ type = 1, size = 'auto' }: SpinnerProps) => (<div className={`overflow-hidden ${cssSizeMap[size]}`}>
     {type === 'pulse' ?
-        <div className="bg-secondary-400 h-full w-full animate-pulse" />
+        <div className="bg-secondary-300 h-full w-full animate-pulse" />
         :
         <img src={spinnersSvg[type - 1]} className={`animate-spin h-full w-full`} />
     }
