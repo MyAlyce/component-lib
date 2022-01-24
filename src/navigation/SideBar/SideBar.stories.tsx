@@ -4,7 +4,7 @@ import type { ComponentStory, ComponentMeta } from '@storybook/react';
 import { SideBar } from './SideBar';
 
 const meta: ComponentMeta<typeof SideBar> = {
-  title: 'Component/SideBar',
+  title: 'Navigation/SideBar',
   component: SideBar,
   // More on argTypes: https://storybook.js.org/docs/react/api/argtypes
   argTypes: {
