@@ -2,6 +2,7 @@ import { nonValue, debounceTimeOut } from '@giveback007/util-lib';
 import className from 'classnames';
 import React, { Component } from 'react';
 import type { ColorTypes, ObjMap } from '../..';
+import { AlertIcon } from './AlertIcon';
 
 export type AlertProps = {
     type: ColorTypes;
@@ -21,6 +22,7 @@ type S = {
 }
 
 const AlertColorMap: ObjMap<ColorTypes> = { primary: 'text-primary-600', secondary: 'text-secondary-600', info: 'text-info-600', warning: 'text-warning-600', danger: 'text-danger-600', success: 'text-success-600' };
+const AlertTextColor: ObjMap<ColorTypes> = { primary: 'text-primary-900', secondary: 'text-secondary-900', info: 'text-info-900', warning: 'text-warning-900', danger: 'text-danger-900', success: 'text-success-900' };
 export class Alert extends Component<AlertProps> {
 
     state: S = {
@@ -89,16 +91,18 @@ export class Alert extends Component<AlertProps> {
         >
             <div className="p-1 flex w-full overflow-hidden mx-auto">
                 <div className='pt-2 ml-3'>
-                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor" className="flex-shrink-0 w-6 h-6">
+                    {/* <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor" className="flex-shrink-0 w-6 h-6">
                         <path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clip-rule="evenodd" />
-                    </svg>
+                    </svg> */}
+                    {/* <img src={icons[type]} className="flex-shrink-0 w-6 h-6 bg-current" style={{ backgroundColor: 'currentcolor' }} /> */}
+                    <AlertIcon type={type} />
                 </div>
 
                 <div className="w-full flex justify-between items-start px-0 py-2">
                     <div className="ml-3">
                         <p className="font-bold">{title}</p>
 
-                        {text && <p className="mt-1 text-sm text-green-900">
+                        {text && <p className={`mt-1 text-sm ${AlertTextColor[type]}`}>
                             {text}
                         </p>}
                     </div>
