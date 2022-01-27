@@ -21,4 +21,12 @@
         text-xs font-bold
         transition-all duration-100 scale-0 origin-left
     }
+
+    .svg-fix {
+        @apply h-full
+    }
+
+    .svg-fix path {
+        stroke: currentColor !important;
+    }
 }

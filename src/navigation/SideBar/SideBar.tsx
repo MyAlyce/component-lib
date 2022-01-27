@@ -3,8 +3,10 @@ import { BsFillAlarmFill, BsFillArchiveFill } from 'react-icons/bs';
 import type { IconType } from 'react-icons';
 
 export type SideBarProps = {
-    // stuff: string;
-    //  
+    /** Set NavBar to position fixed at top of screen. Default: `false` */
+    fixed: boolean;
+    /** Set the position of the sidebar */
+    position: 'left' | 'right';
 }
 
 
