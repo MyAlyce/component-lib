@@ -27,6 +27,16 @@
     }
 
     .svg-fix path {
-        stroke: currentColor !important;
+        stroke: currentColor; 
     }
+    
+    /* .nav-drawer-scroll::-webkit-scrollbar {
+        width: 1rem
+    }
+
+    .nav-drawer-scroll::-webkit-scrollbar-track {
+        cursor: pointer;
+        background: red;
+    } */
 }
+

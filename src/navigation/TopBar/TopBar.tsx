@@ -1,5 +1,5 @@
 import classNames from 'classnames';
-import React, { useState } from 'react';
+import React, { PropsWithChildren, useState } from 'react';
 import type { NavItem } from '../..';
 
 const menuOut = <path d="M408 442h480c4.4 0 8-3.6 8-8v-56c0-4.4-3.6-8-8-8H408c-4.4 0-8 3.6-8 8v56c0 4.4 3.6 8 8 8zm-8 204c0 4.4 3.6 8 8 8h480c4.4 0 8-3.6 8-8v-56c0-4.4-3.6-8-8-8H408c-4.4 0-8 3.6-8 8v56zm504-486H120c-4.4 0-8 3.6-8 8v56c0 4.4 3.6 8 8 8h784c4.4 0 8-3.6 8-8v-56c0-4.4-3.6-8-8-8zm0 632H120c-4.4 0-8 3.6-8 8v56c0 4.4 3.6 8 8 8h784c4.4 0 8-3.6 8-8v-56c0-4.4-3.6-8-8-8zM142.4 642.1L298.7 519a8.84 8.84 0 0 0 0-13.9L142.4 381.9c-5.8-4.6-14.4-.5-14.4 6.9v246.3a8.9 8.9 0 0 0 14.4 7z"/>;
@@ -20,16 +20,20 @@ export type TopBarProps = {
 
     leftNavItems?: NavItem[];
     rightNavItems?: NavItem[];
+
+    zIndex?: number;
 }
 
-export function TopBar({ fixed, onMenuExpand, leftNavItems, rightNavItems }: TopBarProps) {
+export function TopBar({ fixed, onMenuExpand, leftNavItems, rightNavItems, zIndex }: TopBarProps) {
     const [expanded, setExpanded] = useState(false);
-    const navClassName = classNames("bg-white shadow dark:bg-gray-800 flex justify-between p-2", fixed && 'fixed top-0 left-0 right-0');
     const navBtns = (arr?: NavItem[]) => arr && arr.map(({ childJsx: children, onClick }) => <TopBarBtn {...{children, onClick}}/>);
 
-    return <nav className={navClassName}>
+    return <nav
+        className={classNames("bg-white shadow dark:bg-gray-800 flex justify-between p-2", fixed && 'fixed top-0 left-0 right-0')}
+        style={{zIndex}}
+    >
         <ul className='flex flex-row'>
-            {onMenuExpand && 
+            {onMenuExpand &&
                 <TopBarBtn onClick={() => {
                     setExpanded(!expanded);
                     onMenuExpand(!expanded);
@@ -42,7 +46,7 @@ export function TopBar({ fixed, onMenuExpand, leftNavItems, rightNavItems }: Top
                         height="1em"
                         width="1em"
                         xmlns="http://www.w3.org/2000/svg"
-                        className='svg-scale'
+                        className='svg-fix'
                     >{expanded ? menuIn : menuOut}</svg>
                 </TopBarBtn>
             }
@@ -57,6 +61,6 @@ export function TopBar({ fixed, onMenuExpand, leftNavItems, rightNavItems }: Top
 
 }
 
-const TopBarBtn = (p: React.PropsWithChildren<{ onClick: () => any; }>) => <li className='p-4 text-neutral-500 hover:text-neutral-800 min-w-2'>
+const TopBarBtn = (p: PropsWithChildren<{ onClick: () => any; }>) => <li className='p-4 text-neutral-500 hover:text-neutral-800 min-w-2'>
     <a className='cursor-pointer' onClick={p.onClick}>{p.children}</a>
 </li>;
