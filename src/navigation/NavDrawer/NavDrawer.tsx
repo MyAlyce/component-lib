@@ -71,7 +71,7 @@ export const NavDrawer = ({
                 onClick={onAvatarClick}
             >
                 <Avatar dataState='done' size='sm' {...user} />
-                <h4 className="ml-1 font-medium text-gray-800 dark:text-gray-200 hover:underline ">
+                <h4 className="ml-1 font-medium text-gray-600 dark:text-gray-400 hover:text-gray-700 dark:hover:text-gray-200">
                     {user.name}
                 </h4>
             </div>}
@@ -92,7 +92,7 @@ type MenuItem = {
 
 type MenuSubmenu = {
     type: 'sub-menu';
-    subMenu: MenuAction[];
+    subMenu: MenuItemProps[];
 } & MenuItem;
 
 type MenuAction = {
@@ -133,7 +133,8 @@ const MenuItemWrap = ({ children, isActive, getHeight, ...props }: PropsWithChil
     {children}
 </div>;
 
-const MenuItem = (p: MenuSubmenu | MenuAction | MenuSection | MenuBreak) => {
+type MenuItemProps = MenuSubmenu | MenuAction | MenuSection | MenuBreak;
+const MenuItem = (p: MenuItemProps) => {
     // let onClick: MouseEventHandler | undefined = undefined;
     return (() => {
         switch (p.type) {
@@ -155,7 +156,7 @@ const MenuItem = (p: MenuSubmenu | MenuAction | MenuSection | MenuBreak) => {
                     <span className="px-3 font-medium">{p.title}</span>
                 </div>;
             case 'sub-menu': {
-                const { icon, title } = p;
+                const { icon, title, subMenu } = p;
                 const [isExpanded, setIsExpanded] = useState(false);
 
                 return <>
@@ -163,7 +164,10 @@ const MenuItem = (p: MenuSubmenu | MenuAction | MenuSection | MenuBreak) => {
                         {icon}
                         <span className="mx-4 font-medium">{title}</span>
                         <svg
-                            className='svg-fix'
+                            className={classNames(
+                                'svg-fix transition-transform ml-auto mr-1.5',
+                                isExpanded && '-rotate-90'
+                            )}
                             stroke="currentColor"
                             fill="currentColor"
                             stroke-width="0"
@@ -181,15 +185,12 @@ const MenuItem = (p: MenuSubmenu | MenuAction | MenuSection | MenuBreak) => {
 
                     {/* TODO: .head_arrow {svg { transform: rotate(180deg); }} */}
                     <div
-                        className={classNames('overflow-hidden transition-all duration-700', isExpanded ? 'max-h-screen' : 'max-h-0')}
+                        className={classNames(
+                            'overflow-hidden transition-all duration-700',
+                            isExpanded ? 'max-h-screen' : 'max-h-0',
+                        )}
                     >
-                        <p>show</p>
-                        <p>show</p>
-                        <p>show</p>
-                        <p>show</p>
-                        <p>show</p>
-                        <p>show</p>
-                        <p>show</p>
+                        {subMenu.map((item) => <MenuItem {...item}/>)}
                     </div>
                 </>;
             }
