@@ -1,21 +1,7 @@
 import React from 'react';
 import type { Size } from '../..';
 import { cssSizeMap } from '../../utils';
-
-import l1 from './svg/spinner-1.svg';
-import l2 from './svg/spinner-2.svg';
-import l3 from './svg/spinner-3.svg';
-import l4 from './svg/spinner-4.svg';
-import l5 from './svg/spinner-5.svg';
-import l6 from './svg/spinner-6.svg';
-import l7 from './svg/spinner-7.svg';
-import l8 from './svg/spinner-8.svg';
-import l9 from './svg/spinner-9.svg';
-import l10 from './svg/spinner-10.svg';
-import l11 from './svg/spinner-11.svg';
-
-
-const spinnersSvg = [l1, l2, l3, l4, l5, l6, l7, l8, l9, l10, l11];
+import { spinnersSvg } from './SpinnerIcons';
 
 export type SpinnerProps = {
     /** If not set or set to `"auto"` will automatically fill the available space */
@@ -27,6 +13,6 @@ export const Spinner = ({ type = 1, size = 'auto' }: SpinnerProps) => (<div clas
     {type === 'pulse' ?
         <div className="bg-secondary-300 h-full w-full animate-pulse" />
         :
-        <img src={spinnersSvg[type - 1]} className={`animate-spin h-full w-full`} />
+        <img src={`data:image/svg+xml;utf8,${spinnersSvg[type - 1]}`} className={`animate-spin h-full w-full`} />
     }
 </div>);

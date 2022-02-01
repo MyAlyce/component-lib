@@ -1,6 +1,4 @@
-import React, { MouseEventHandler, PropsWithChildren, RefObject, useEffect, useRef, useState } from 'react';
-import { BsFillAlarmFill, BsFillArchiveFill } from 'react-icons/bs';
-import type { IconType } from 'react-icons';
+import React, { MouseEventHandler, PropsWithChildren, useEffect, useState } from 'react';
 import classNames from 'classnames';
 import { isType } from '@giveback007/util-lib';
 import { Avatar } from '../../components/Avatar/Avatar';
@@ -8,10 +6,6 @@ import { Avatar } from '../../components/Avatar/Avatar';
 // TODO:
   // use width & ellipsis (for too long items)
   // icon-mode (check tailwind media)
-  // hidden-mode
-  // brand always on top (only scroll menu items, including avatar)
-  // handle not fixed (position)
-
 
 export type NavDrawerProps = {
     /** Set NavBar to position fixed at the `left` or `right` of screen. Default: `"left"` */
@@ -34,13 +28,18 @@ export type NavDrawerProps = {
     /** Function to handle clicks on user avatar at the top of navbar */
     onAvatarClick?: MouseEventHandler;
 
+    /** Function to handle clicks on menu backdrop at the top of navbar */
+    onBackdropClick?: MouseEventHandler;
+
     /** Define menu items */
     menuItems: (MenuSubmenu | MenuAction | MenuSection | MenuBreak)[];
+
+    isOpen: boolean;
 }
 
 export const NavDrawer = ({
-    brand, fixed, zIndex = 100, user, onBrandClick, onAvatarClick, menuItems
-}: NavDrawerProps) => <>{fixed && <Backdrop zIndex={zIndex - 1} />}<div
+    brand, fixed, zIndex = 100, user, onBrandClick, onAvatarClick, onBackdropClick, menuItems, isOpen
+}: NavDrawerProps) => <>{fixed && isOpen && <Backdrop {...{ onBackdropClick, zIndex: zIndex - 1}} />}<div
     className={classNames(`
         flex flex-col
         bg-white
@@ -48,9 +47,14 @@ export const NavDrawer = ({
         shadow
         text-secondary-600
         w-64
-        
         scrollbar-thin scrollbar-track-secondary-200 scrollbar-thumb-secondary-400 scrollbar
-    `, fixed && 'h-screen fixed top-0 ' + (fixed === 'left' ? 'left-0' : 'right-0'),)}
+        transition-all duration-500`,
+        fixed && 'h-screen fixed top-0 ' + (fixed === 'left' ? 'left-0' : 'right-0'),
+        fixed && [
+            !isOpen && fixed === 'left' && '-translate-x-full',
+            !isOpen && fixed === 'right' && 'translate-x-full',
+        ]
+    )}
     style={{zIndex}}
     // overflow-y-auto overflow-x-hidden
     // scrollbar-thin scrollbar scrollbar-thumb-custom scrollbar-track-custom-light overflow-y-scroll
@@ -60,30 +64,42 @@ export const NavDrawer = ({
         onClick={onBrandClick}
     >
         {isType(brand, 'string') ? <h2
-            className={classNames("text-3xl font-semibold text-gray-800 dark:text-white", fixed === 'right' && 'text-right')}
+            className={classNames("text-3xl font-semibold text-gray-800 dark:text-white")}
         >{brand}</h2> : {brand}}
     </div>}
 
+    {user && <div
+        className={classNames("flex items-center border-b border-secondary-200 pl-1.5 py-2", onAvatarClick && 'cursor-pointer')}
+        onClick={onAvatarClick}
+    >
+        <Avatar dataState='done' size='sm' {...user} />
+        <h4 className="ml-1 font-medium text-gray-600 dark:text-gray-400 hover:text-gray-700 dark:hover:text-gray-200">
+            {user.name}
+        </h4>
+    </div>}
+
     <div className="flex flex-col justify-between flex-1">
-        <nav>
-            {user && <div
-                className={classNames("flex items-center border-b border-secondary-200 pl-1.5 py-2", onAvatarClick && 'cursor-pointer')}
-                onClick={onAvatarClick}
-            >
-                <Avatar dataState='done' size='sm' {...user} />
-                <h4 className="ml-1 font-medium text-gray-600 dark:text-gray-400 hover:text-gray-700 dark:hover:text-gray-200">
-                    {user.name}
-                </h4>
-            </div>}
+        <nav className='pl-1'>
             {menuItems.map((item) => <MenuItem {...item}/>)}
         </nav>
     </div>
 </div></>;
 
-const Backdrop = ({ zIndex }: { zIndex: number }) => <div
-    className={classNames('fixed top-0 left-0 right-0 w-screen h-screen opacity-50 bg-black')}
-    style={{zIndex}}
-></div>;
+const Backdrop = ({ zIndex, onBackdropClick }: { zIndex: number; onBackdropClick?: MouseEventHandler; }) => {
+    const [opacity, setOpacity] = useState(false);
+    useEffect(() => {
+        setTimeout(() => setOpacity(true), 0);
+    }, [zIndex]);
+
+    return <div
+        className={classNames(
+            'fixed top-0 left-0 right-0 w-screen h-screen bg-black transition-opacity duration-500',
+            opacity ? 'opacity-50' : 'opacity-0'
+        )}
+        style={{zIndex}}
+        onClick={onBackdropClick}
+    ></div>;
+};
 
 type MenuItem = {
     title: string;
@@ -200,24 +216,24 @@ const MenuItem = (p: MenuItemProps) => {
     })();
 };
 
-export const SideBar_OLD = ({ fixed, zIndex = 100 }: NavDrawerProps) => <>
-    <aside className={classNames(`
-        flex flex-col
-        h-screen
-        w-16 m-0
-        bg-gray-900 text-white shadow-lg`,
-        fixed && 'fixed top-0 ' + (fixed === 'left' ? 'left-0' : 'right-0'),
-    )}
-        style={{zIndex}}
-    >
-        <SideBarIcon icon={BsFillAlarmFill} />
-        <SideBarIcon icon={BsFillArchiveFill} text="tooltip" />
-    </aside>
-</>;
+// export const SideBar_OLD = ({ fixed, zIndex = 100 }: NavDrawerProps) => <>
+//     <aside className={classNames(`
+//         flex flex-col
+//         h-screen
+//         w-16 m-0
+//         bg-gray-900 text-white shadow-lg`,
+//         fixed && 'fixed top-0 ' + (fixed === 'left' ? 'left-0' : 'right-0'),
+//     )}
+//         style={{zIndex}}
+//     >
+//         <SideBarIcon icon={BsFillAlarmFill} />
+//         <SideBarIcon icon={BsFillArchiveFill} text="tooltip" />
+//     </aside>
+// </>;
 
-const SideBarIcon = (p: { icon: IconType, text?: string }) => <div
-    className='sidebar-icon group'
->
-    {<p.icon />}
-    {p.text ? <span className='sidebar-tooltip group-hover:scale-100'>{p.text}</span> : null}
-</div>;
+// const SideBarIcon = (p: { icon: IconType, text?: string }) => <div
+//     className='sidebar-icon group'
+// >
+//     {<p.icon />}
+//     {p.text ? <span className='sidebar-tooltip group-hover:scale-100'>{p.text}</span> : null}
+// </div>;

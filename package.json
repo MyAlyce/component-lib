@@ -1,8 +1,10 @@
 {
   "name": "my-alyce-component-lib",
-  "version": "0.0.2",
+  "version": "0.0.9",
   "author": "Dovydas Stirpeika <Dovy91@gmail.com>",
   "license": "MIT",
+  "main": "dist/index.js",
+  "types": "dist/index.d.ts",
   "scripts": {
     "start": "concurrently \"yarn:storybook\" \"yarn:test:watch\" \"yarn:tailwind\" -k --kill-others-on-fail -p \"{name}|\" -n \"SB,JT,TW\" -c \"magenta,yellow,cyan\"",
     "test": "react-scripts test",
@@ -13,9 +15,13 @@
     "storybook": "start-storybook --quiet -p 6006 -s src/assets",
     "storybook:build": "yarn tailwind:build && build-storybook --docs -c .storybook -o docs -s src/assets",
     "lint": "eslint ./src --ext .ts,.tsx",
-    "build:npm": "tsc",
+    "build:npm": "tsc && node scripts copy:styles",
     "pub": "yarn run lint && node scripts clean:dist && yarn build:npm && npm publish"
   },
+  "files": [
+    "/dist",
+    "/src"
+  ],
   "resolutions": {
     "mini-css-extract-plugin": "2.4.5"
   },

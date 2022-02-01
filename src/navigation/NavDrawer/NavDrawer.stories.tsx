@@ -16,9 +16,10 @@ const meta: ComponentMeta<typeof NavDrawer> = {
   // More on argTypes: https://storybook.js.org/docs/react/api/argtypes
   parameters: { docs: { inlineStories: false, } },
   args: {
+    isOpen: true,
     user: { imgSrc: avatarUtils.getImg(), name: 'John Doe' },
     menuItems: [
-      { type: 'action', icon: <MdDashboard />, title: 'dashboard', onClick: action('dashboard') },
+      { type: 'action', icon: <MdDashboard />, title: 'dashboard', onClick: action('dashboard'), isActive: true },
       { type: 'action', icon: <BsClipboardData />, title: 'data', onClick: action('data') },
       { type: 'action', icon: <IoLogoWechat />, title: 'chat', onClick: action('chat') },
       { type: 'section', title: 'Section-1'},
@@ -26,7 +27,7 @@ const meta: ComponentMeta<typeof NavDrawer> = {
       { type: 'action', icon: <BsClipboardData />, title: 'data', onClick: action('data') },
       { type: 'action', icon: <IoLogoWechat />, title: 'chat', onClick: action('chat') },
       { type: 'break' },
-
+      
       { type: 'section', title: 'Section-2 Multi-Level'},
       { type: 'sub-menu', icon: <CgMenuRound />, title: 'Level-1', subMenu: [
           { type: 'action', icon: <AiOutlineInfoCircle />, title: 'Level-2', onClick: action('Level-2') },
