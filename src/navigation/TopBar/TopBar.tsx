@@ -12,9 +12,9 @@ export type TopBarProps = {
     /** Set this function for left menu expand button */
     onMenuExpand?: (expand: boolean) => any;
 
-    // marginRight: string;
+    // marginRight: string; // TODO (check admin lte)
 
-    // addSpacer: boolean;
+    // addSpacer: boolean; // TODO
 
     // search: // TODO this will be more involved
 

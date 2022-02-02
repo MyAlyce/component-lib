@@ -13,7 +13,6 @@ export type NavDrawerProps = {
 
     zIndex?: number;
 
-    // expanded: 
     brand?: JSX.Element | string
 
     user?: {
@@ -63,9 +62,10 @@ export const NavDrawer = ({
         className={classNames('border-b border-secondary-200 px-2 py-1.5', onBrandClick && 'cursor-pointer')}
         onClick={onBrandClick}
     >
+        {console.log('BRAND:', brand)}
         {isType(brand, 'string') ? <h2
             className={classNames("text-3xl font-semibold text-gray-800 dark:text-white")}
-        >{brand}</h2> : {brand}}
+        >{brand}</h2> : brand}
     </div>}
 
     {user && <div
@@ -80,7 +80,7 @@ export const NavDrawer = ({
 
     <div className="flex flex-col justify-between flex-1">
         <nav className='pl-1'>
-            {menuItems.map((item) => <MenuItem {...item}/>)}
+            {menuItems.map((item, i) => <MenuItem {...item} key={i} />)}
         </nav>
     </div>
 </div></>;
@@ -103,7 +103,7 @@ const Backdrop = ({ zIndex, onBackdropClick }: { zIndex: number; onBackdropClick
 
 type MenuItem = {
     title: string;
-    icon: JSX.Element;
+    icon?: JSX.Element;
 }
 
 type MenuSubmenu = {
@@ -145,75 +145,72 @@ const MenuItemWrap = ({ children, isActive, getHeight, ...props }: PropsWithChil
         'hover:bg-gray-200 dark:hover:bg-gray-700 hover:text-gray-700 dark:hover:text-gray-200'
     )}
     {...props}
->
-    {children}
-</div>;
+>{children}</div>;
 
 type MenuItemProps = MenuSubmenu | MenuAction | MenuSection | MenuBreak;
 const MenuItem = (p: MenuItemProps) => {
     // let onClick: MouseEventHandler | undefined = undefined;
-    return (() => {
-        switch (p.type) {
-            case 'action': {
-                const { isActive, icon, title, onClick } = p;
-                
-                return <MenuItemWrap {...{ isActive, onClick }}>
-                    {icon}
-                    <span className="mx-4 font-medium">{title}</span>
-                </MenuItemWrap>;
-            }
-            case 'break':
-                return <hr className="my-1 dark:border-gray-600" />;
-            case 'section':
-                return <div className='
-                    overflow-hidden my-1 py-2
-                    text-gray-600 dark:text-gray-400
-                '>
-                    <span className="px-3 font-medium">{p.title}</span>
-                </div>;
-            case 'sub-menu': {
-                const { icon, title, subMenu } = p;
-                const [isExpanded, setIsExpanded] = useState(false);
-
-                return <>
-                    <MenuItemWrap {...{ isActive: isExpanded, onClick: () => setIsExpanded(!isExpanded) }}>
-                        {icon}
-                        <span className="mx-4 font-medium">{title}</span>
-                        <svg
-                            className={classNames(
-                                'svg-fix transition-transform ml-auto mr-1.5',
-                                isExpanded && '-rotate-90'
-                            )}
-                            stroke="currentColor"
-                            fill="currentColor"
-                            stroke-width="0"
-                            viewBox="0 0 16 16"
-                            height="1em"
-                            width="1em"
-                            xmlns="http://www.w3.org/2000/svg"
-                        >
-                            <path
-                                fill-rule="evenodd"
-                                d="M11.354 1.646a.5.5 0 0 1 0 .708L5.707 8l5.647 5.646a.5.5 0 0 1-.708.708l-6-6a.5.5 0 0 1 0-.708l6-6a.5.5 0 0 1 .708 0z"
-                            />
-                        </svg>
-                    </MenuItemWrap>
-
-                    {/* TODO: .head_arrow {svg { transform: rotate(180deg); }} */}
-                    <div
-                        className={classNames(
-                            'overflow-hidden transition-all duration-700',
-                            isExpanded ? 'max-h-screen' : 'max-h-0',
-                        )}
-                    >
-                        {subMenu.map((item) => <MenuItem {...item}/>)}
-                    </div>
-                </>;
-            }
-            default:
-                return null;
+    
+    switch (p.type) {
+        case 'action': {
+            const { isActive, icon, title, onClick } = p;
+            
+            return <MenuItemWrap {...{ isActive, onClick }}>
+                {icon && icon}
+                <span className="mx-4 font-medium">{title}</span>
+            </MenuItemWrap>;
         }
-    })();
+        case 'break':
+            return <hr className="my-1 dark:border-gray-600" />;
+        case 'section':
+            return <div className='
+                overflow-hidden my-1 py-2
+                text-gray-600 dark:text-gray-400
+            '>
+                <span className="px-3 font-medium">{p.title}</span>
+            </div>;
+        case 'sub-menu': {
+            const { icon, title, subMenu } = p;
+            const [isExpanded, setIsExpanded] = useState(false);
+
+            return <>
+                <MenuItemWrap {...{ isActive: isExpanded, onClick: () => setIsExpanded(!isExpanded) }}>
+                    {icon && icon}
+                    <span className="mx-4 font-medium">{title}</span>
+                    <svg
+                        className={classNames(
+                            'svg-fix transition-transform ml-auto mr-1.5',
+                            isExpanded && '-rotate-90'
+                        )}
+                        stroke="currentColor"
+                        fill="currentColor"
+                        stroke-width="0"
+                        viewBox="0 0 16 16"
+                        height="1em"
+                        width="1em"
+                        xmlns="http://www.w3.org/2000/svg"
+                    >
+                        <path
+                            fill-rule="evenodd"
+                            d="M11.354 1.646a.5.5 0 0 1 0 .708L5.707 8l5.647 5.646a.5.5 0 0 1-.708.708l-6-6a.5.5 0 0 1 0-.708l6-6a.5.5 0 0 1 .708 0z"
+                        />
+                    </svg>
+                </MenuItemWrap>
+
+                {/* TODO: .head_arrow {svg { transform: rotate(180deg); }} */}
+                <div
+                    className={classNames(
+                        'overflow-hidden transition-all duration-700',
+                        isExpanded ? 'max-h-screen' : 'max-h-0',
+                    )}
+                >
+                    {subMenu.map((item, i) => <MenuItem {...item} key={i}/>)}
+                </div>
+            </>;
+        }
+        default:
+            return null;
+    }
 };
 
 // export const SideBar_OLD = ({ fixed, zIndex = 100 }: NavDrawerProps) => <>
