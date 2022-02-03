@@ -26,7 +26,8 @@ const buttonBorderMap: ObjMap<ColorTypes> = { primary: 'border-primary-500 text-
 const buttonBadgeMap: ObjMap<Size | 'auto', Size> = { xs: 'xs', sm: 'sm', md: 'md', lg: 'md', xl: 'lg', auto: 'md' };
 // size === 'auto' ? 'md' : size
 export const Button = ({
-  size = 'md', type = 'secondary', shape = 'round', outline = false, badge, className, disabled, ...props
+  size = 'md', type = 'secondary', shape = 'round',
+  outline = false, badge, className, disabled, children, ...props
 }: PropsWithChildren<ButtonProps>) => {
   const [isHover, setIsHover] = useState(false);
 
@@ -46,7 +47,7 @@ export const Button = ({
       {...props}
     >
       {badge && <Badge size={buttonBadgeMap[size]} badge={badge} className={size === 'xs' || size === 'sm' ? '-top-1.5 -right-1.5' : '-top-2 -right-3'} />}
-      {props.children}
+      {children}
     </button>
   );
 };
