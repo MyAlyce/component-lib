@@ -20,11 +20,15 @@ export const Example = Template.bind({});
 export const AutoSize = Template.bind({});
 AutoSize.decorators = [Story => (
     <>
-    <h3>(Resize The Box:)</h3>
-    <div style={{ margin: 'auto', border: 'solid 2px', width: 150, height: 100, resize: 'both', overflow: 'auto' }}>
-        
-        {Story()}
-    </div>
+        <h3>(Resize The Box:)</h3>
+        <div style={{
+            margin: 'auto',
+            border: 'solid 2px',
+            width: 150,
+            height: 100,
+            resize: 'both',
+            overflow: 'auto'
+        }}>{Story()}</div>
     </>
 )];
 AutoSize.args = {

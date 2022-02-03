@@ -54,7 +54,6 @@ const args: NavDrawerProps = {
 const meta: ComponentMeta<typeof NavDrawer> = {
   title: 'Navigation/NavDrawer',
   component: NavDrawer,
-  // More on argTypes: https://storybook.js.org/docs/react/api/argtypes
   parameters: { docs: { inlineStories: false, } },
   args,
   argTypes: {
@@ -62,10 +61,8 @@ const meta: ComponentMeta<typeof NavDrawer> = {
   },
 };
 
-// More on default export: https://storybook.js.org/docs/react/writing-stories/introduction#default-export
 export default meta;
 
-// More on component templates: https://storybook.js.org/docs/react/writing-stories/introduction#using-args
 const Template: ComponentStory<typeof NavDrawer> = (args) => <NavDrawer {...args} />;
 
 export const Example = Template.bind({});
@@ -75,4 +72,4 @@ JsxBrand.args = {
   ...args,
   brand: <img src={logo} />
 };
-// JsxBrand.name = 'JSX Brand';
+

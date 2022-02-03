@@ -209,7 +209,8 @@ const MenuItem = (p: MenuItemProps) => {
             </>;
         }
         default:
-            return null;
+            console.error(p);
+            throw new Error('This type of MenuItem is not implemented.');
     }
 };
 

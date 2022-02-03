@@ -1,4 +1,4 @@
-import React, { useState, HTMLAttributes } from 'react';
+import React, { PropsWithChildren, useState } from 'react';
 import type { ColorTypes, ObjMap, Size } from '../..';
 import { Badge } from '../Badge/Badge';
 
@@ -14,10 +14,8 @@ export interface ButtonProps {
   onClick?: () => void;
   /** Can add a badge to the button */
   badge?: number | boolean;
-  className?: HTMLAttributes<any>['className'];
+  className?: string;
   disabled?: boolean;
-
-  // TODO: /* When made menu component */ dropdown?: 
 }
 
 
@@ -29,7 +27,7 @@ const buttonBadgeMap: ObjMap<Size | 'auto', Size> = { xs: 'xs', sm: 'sm', md: 'm
 // size === 'auto' ? 'md' : size
 export const Button = ({
   size = 'md', type = 'secondary', shape = 'round', outline = false, badge, className, disabled, ...props
-}: React.PropsWithChildren<ButtonProps>) => {
+}: PropsWithChildren<ButtonProps>) => {
   const [isHover, setIsHover] = useState(false);
 
   return (

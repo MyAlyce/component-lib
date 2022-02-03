@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { PropsWithChildren } from 'react';
 import type { ComponentMeta, ComponentStory } from "@storybook/react";
 import { Badge } from './Badge';
 
@@ -15,7 +15,7 @@ const meta: ComponentMeta<typeof Badge> = {
 export default meta;
 
 // eslint-disable-next-line @typescript-eslint/ban-types
-const Box = ({ children }: React.PropsWithChildren<{}>) => <div 
+const Box = ({ children }: PropsWithChildren<{}>) => <div 
     className='relative'
     style={{ margin: 'auto', border: 'solid 2px', width: 150, height: 100, resize: 'both', overflow: 'auto' }}
 >{children}</div>;
