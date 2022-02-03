@@ -1,5 +1,5 @@
 import { nonValue, debounceTimeOut } from '@giveback007/util-lib';
-import className from 'classnames';
+import classNames from 'classnames';
 import React, { Component } from 'react';
 import type { ColorTypes, ObjMap } from '../..';
 import { AlertIcon } from './AlertIcon';
@@ -11,6 +11,7 @@ export type AlertProps = {
     onClose?: () => any;
     title: string;
     text?: string;
+    className?: string;
 }
 
 type S = {
@@ -74,14 +75,15 @@ export class Alert extends Component<AlertProps> {
     componentWillUnmount = () => this.closingDebounce('cancel');
 
     render = () => {
-        const { title, text, type } = this.props;
+        const { title, text, type, className } = this.props;
         const { isHover, isClosing, botW, transitionDuration: botTime, isClosed } = this.state;
         const transitionDuration = isHover ? undefined : botTime;
         
-        const containerClassName = className(
+        const containerClassName = classNames(
             'bg-white border border-current border-b-0 rounded-lg flex flex-col overflow-hidden transition-opacity duration-700',
             {'opacity-0': isClosing },
             AlertColorMap[type],
+            className
         );
 
         return isClosed ? null : <div

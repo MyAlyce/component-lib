@@ -14,6 +14,21 @@ module.exports = {
                 info: colors.cyan,
                 danger: colors.red,
                 warning: colors.amber,
+            },
+            animation: {
+                'slide-down': 'slide-down .15s ease 1',
+            },
+            keyframes: {
+                'slide-down': {
+                    '0%': {
+                        opacity: 0,
+                        transform: 'translateY(-1.6rem)'
+                    },
+                    '100%': {
+                        opacity: 1,
+                        transform: 'translateY(0)'
+                    },
+                }
             }
         },
         minWidth: {
@@ -25,21 +40,6 @@ module.exports = {
             '24': '6rem',
             '32': '8rem',
         },
-        keyframes: {
-            'slide-down': {
-                '0%': {
-                    opacity: 0,
-                    transform: 'translateY(-1.6rem)'
-                },
-                '100%': {
-                    opacity: 1,
-                    transform: 'translateY(0)'
-                },
-            }
-        },
-        animation: {
-            'slide-down': 'slide-down .15s ease 1',
-        }
     },
     plugins: [
         require('@tailwindcss/forms'),

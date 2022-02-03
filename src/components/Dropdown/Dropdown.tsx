@@ -18,10 +18,12 @@ export type DropdownProps = {
     itemBorders?: boolean;
 
     size?: Size | 'auto';
+
+    className?: string;
 }
 
-const dropdownSizeMap: ObjMap<Size | 'auto'> = { xs: 'w-30', sm: 'w-44', md: 'w-56', lg: 'w-80', xl: 'w-96', auto: 'w-full'};
-export function Dropdown({ header, items, show, children, itemBorders, size = 'md' }: PropsWithChildren<DropdownProps>) {
+const dropdownSizeMap: ObjMap<Size | 'auto'> = { xs: 'w-30', sm: 'w-44', md: 'w-60', lg: 'w-80', xl: 'w-96', auto: 'w-full'};
+export function Dropdown({ header, items, show, children, itemBorders, size = 'md', className }: PropsWithChildren<DropdownProps>) {
     
     const renderItems = itemBorders ? items.filter(x => x.type !== 'break') : items;
     return <div className='dropdown relative'>
@@ -30,6 +32,7 @@ export function Dropdown({ header, items, show, children, itemBorders, size = 'm
             "animate-slide-down absolute bg-white text-sm list-none divide-gray-100 rounded-sm shadow-md",
             isType(show, 'boolean') ? (!show && 'hidden') : 'hidden dropdown-menu',
             dropdownSizeMap[size],
+            className
         )}>
             {header && <div className={classNames("cursor-default", itemBorders && 'border-b border-secondary-200')}>
                 {isType(header, 'string') ? 

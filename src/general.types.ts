@@ -8,4 +8,4 @@ export type ObjMap<S extends string, T = string> = { [K in S]: T };
 
 export type AnyFct = () => any;
 
-export type NavItem = { onClick: AnyFct, childJsx: JSX.Element | string };
+export type NavItem = { onClick: AnyFct, children: JSX.Element | string };

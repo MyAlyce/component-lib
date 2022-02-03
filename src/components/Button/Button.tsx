@@ -1,3 +1,4 @@
+import classNames from 'classnames';
 import React, { PropsWithChildren, useState } from 'react';
 import type { ColorTypes, ObjMap, Size } from '../..';
 import { Badge } from '../Badge/Badge';
@@ -34,13 +35,15 @@ export const Button = ({
   return (
     <button
       type="button"
-      className={`
-        relative ${buttonSizeMap[size]} ${shape === 'flat' ? 'rounded-none' : 'rounded-lg'}
-      text-gray-100 font-normal
-        border-2 ${outline && !isHover ? buttonBorderMap[type] : buttonColorMap[type] + ' border-transparent'}
-        ${!disabled && buttonHoverMap[type]}
-        transition-all ${className} ${disabled ? 'opacity-60' : ''}
-      `}
+      className={classNames(
+        "relative text-gray-100 font-normal border-2 transition-all",
+        buttonSizeMap[size],
+        outline && !isHover ? buttonBorderMap[type] : buttonColorMap[type] + ' border-transparent',
+        shape === 'flat' ? 'rounded-none' : 'rounded-lg',
+        disabled && 'opacity-60',
+        !disabled && buttonHoverMap[type],
+        className,
+      )}
       onMouseEnter={() => setIsHover(disabled ? false : true)}
       onMouseLeave={() => setIsHover(false)}
       disabled={disabled}

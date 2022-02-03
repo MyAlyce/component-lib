@@ -22,14 +22,20 @@ export type TopBarProps = {
     rightNavItems?: NavItem[];
 
     zIndex?: number;
+
+    className: string;
 }
 
-export function TopBar({ fixed, onMenuExpand, leftNavItems, rightNavItems, zIndex }: TopBarProps) {
+export function TopBar({ fixed, onMenuExpand, leftNavItems, rightNavItems, zIndex, className }: TopBarProps) {
     const [expanded, setExpanded] = useState(false);
-    const navBtns = (arr?: NavItem[]) => arr && arr.map(({ childJsx: children, onClick }) => <TopBarBtn {...{children, onClick}}/>);
+    const navBtns = (arr?: NavItem[]) => arr && arr.map(({ children, onClick }) => <TopBarBtn {...{children, onClick}}/>);
 
     return <nav
-        className={classNames("bg-white shadow dark:bg-gray-800 flex justify-between p-2", fixed && 'fixed top-0 left-0 right-0')}
+        className={classNames(
+            "bg-white shadow dark:bg-gray-800 flex justify-between p-2",
+            fixed && 'fixed top-0 left-0 right-0',
+            className
+        )}
         style={{zIndex}}
     >
         <ul className='flex flex-row'>
@@ -61,6 +67,8 @@ export function TopBar({ fixed, onMenuExpand, leftNavItems, rightNavItems, zInde
 
 }
 
-const TopBarBtn = (p: PropsWithChildren<{ onClick: () => any; }>) => <li className='p-4 text-neutral-500 hover:text-neutral-800 min-w-2'>
+const TopBarBtn = (p: PropsWithChildren<{ onClick: () => any; }>) => <li
+    className='p-4 text-neutral-500 hover:text-neutral-800 min-w-2'
+>
     <a className='cursor-pointer' onClick={p.onClick}>{p.children}</a>
 </li>;

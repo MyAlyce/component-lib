@@ -3,6 +3,7 @@ import React, { MouseEventHandler, useState } from 'react';
 import type { DataState, Size } from '../..';
 import { Badge } from '../Badge/Badge';
 import { cssSizeMap } from '../../utils';
+import classNames from 'classnames';
 
 import { Spinner } from '../Spinner/Spinner';
 
@@ -17,10 +18,11 @@ export type AvatarProps = {
     badge?: boolean | number;
     size: Size;
     onClick?: MouseEventHandler;
+    className?: string;
 };
 
 export const Avatar = (p: AvatarProps) => {
-    const { dataState, imgSrc, backgroundColor, status, badge, size, onClick } = p;
+    const { dataState, imgSrc, backgroundColor, status, badge, size, onClick, className } = p;
     
     const name = (() => {
         if (dataState === 'loading' || dataState === 'error')
@@ -35,12 +37,15 @@ export const Avatar = (p: AvatarProps) => {
     
     return <div
         onClick={onClick}
-        className={`
+        className={classNames(`
             flex relative justify-center items-center
-            m-1 mr-2 rounded-full text-white${backgroundColor || dataState === 'loading' ? '' : ' bg-secondary-500'}
-            ${dataState === 'loading' ? ' overflow-hidden' : ''}
-            ${cssSizeMap[size]} ${onClick ? ' cursor-pointer' : ''}
-        `}
+            m-1 mr-2 rounded-full text-white`,
+            cssSizeMap[size],
+            !(backgroundColor || dataState === 'loading') &&'bg-secondary-500',
+            dataState === 'loading' && ' overflow-hidden',
+            onClick && 'cursor-pointer',
+            className
+        )}
         title={dataState === 'error' ? "Couldn't Load User" : dataState === 'loading' ? 'Loading...' : name}
         style={{ backgroundColor }}
     >

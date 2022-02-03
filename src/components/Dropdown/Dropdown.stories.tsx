@@ -49,7 +49,7 @@ JsxHeader.args = { ...args, header: <div className="bg-white w-full flex flex-ro
     </div>
 </div> };
 
-const aElm = (Icon: IconType, text: string, time: string) => <a className="flex flex-row text-sm hover:bg-gray-100 text-gray-700 cursor-pointer px-4 py-2">
+const aElm = (Icon: IconType, text: string, time: string) => <a className="flex flex-row text-sm hover:bg-gray-100 text-gray-600 cursor-pointer px-4 py-2">
     <Icon className='svg-fix mr-2 h-auto' /> {text}
     <span className="ml-auto text-sm">{time}</span>
 </a>;
@@ -57,7 +57,7 @@ const aElm = (Icon: IconType, text: string, time: string) => <a className="flex 
 export const JsxItems = Template.bind({});
 JsxItems.args = {
     ...args,
-    size: 'lg',
+    size: 'md',
     itemBorders: true,
     header: <span className="py-1.5 block text-center text-gray-500">15 Notifications</span>,
     items: [
