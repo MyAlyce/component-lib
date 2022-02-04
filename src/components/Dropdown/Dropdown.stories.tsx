@@ -21,7 +21,8 @@ const args: PropsWithChildren<DropdownProps> = {
         { type: 'action', title: 'action-3', onClick: action('action-3') },
         { type: 'action', title: 'action-4', onClick: action('action-4') },
     ],
-    children: <Button type='primary'>Toggle Dropdown</Button>
+    children: <Button type='primary'>Toggle</Button>,
+    containerClassName: 'm-auto'
 };
 
 const meta: ComponentMeta<typeof Dropdown> = {
@@ -31,7 +32,7 @@ const meta: ComponentMeta<typeof Dropdown> = {
     argTypes: {
         header: { defaultValue: '', type: 'string' }
     },
-    decorators: [Story => <div className='flex justify-center'>{Story()}</div>]
+    decorators: [Story => <div className='flex'>{Story()}</div>]
 };
 
 export default meta;

@@ -23,13 +23,29 @@ const meta: ComponentMeta<typeof TopBar> = {
               { type: 'break' },
               { type: 'action', title: 'separated-action', onClick: action('separated-action') },
             ]}
-            show
+            // show
+            align="right"
+            containerClassName='w-full h-full'
+            className="mt-4"
           >
             <GrChatOption className="svg-fix" />
           </Dropdown>,
           onClick: action('Chat')
         }, {
-          children: <GrNotification className="svg-fix" />,
+          children: <Dropdown
+            items={[
+              { type: 'action', title: 'action-1', onClick: action('action-1') },
+              { type: 'action', title: 'action-2', onClick: action('action-2') },
+              { type: 'break' },
+              { type: 'action', title: 'separated-action', onClick: action('separated-action') },
+            ]}
+            // show
+            align="right"
+            containerClassName='w-full h-full'
+            className="mt-4"
+          >
+            <GrNotification className="svg-fix" />
+          </Dropdown>,
           onClick: action('Notification')
         }
       ]

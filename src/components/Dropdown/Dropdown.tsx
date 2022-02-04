@@ -1,6 +1,7 @@
 import { isType } from '@giveback007/util-lib';
 import classNames from 'classnames';
-import React, { MouseEventHandler, PropsWithChildren } from 'react';
+import React, { MouseEventHandler, PropsWithChildren, useRef, useState } from 'react';
+import { clickOutListener } from '../../utils';
 import type { ObjMap, Size } from '../..';
 
 // TODO:
@@ -19,18 +20,46 @@ export type DropdownProps = {
 
     size?: Size | 'auto';
 
+    /** Adds additional classes to the dropdown */ 
     className?: string;
+
+    /** Adds additional classes to the dropdown container */ 
+    containerClassName?: string;
+
+    /** If the dropdown is close to the right edge of the browser, you can add `right`. Default: 'left' */
+    align?: 'left' | 'right';
 }
 
 const dropdownSizeMap: ObjMap<Size | 'auto'> = { xs: 'w-30', sm: 'w-44', md: 'w-60', lg: 'w-80', xl: 'w-96', auto: 'w-full'};
-export function Dropdown({ header, items, show, children, itemBorders, size = 'md', className }: PropsWithChildren<DropdownProps>) {
+export function Dropdown({
+    header, items, show, children,
+    itemBorders, size = 'md',
+    className, align = 'left',
+    containerClassName
+}: PropsWithChildren<DropdownProps>) {
+    const [isOpen, setIsOpen] = useState(show || false);
+    const close = () => setTimeout(() => setIsOpen(false), 0);
+    const container = useRef<HTMLDivElement>(null);
+    clickOutListener(container, close);
     
+
     const renderItems = itemBorders ? items.filter(x => x.type !== 'break') : items;
-    return <div className='dropdown relative'>
+
+    const domActions = {
+        onClick: () => setIsOpen(!isOpen),
+        onBlur: close,
+    };
+
+    return <div
+        className={classNames('relative', containerClassName)}
+        {...show ?? domActions}
+        ref={container}
+    >
         {children}
         <div className={classNames(
-            "animate-slide-down absolute bg-white text-sm list-none divide-gray-100 rounded-sm shadow-md",
-            isType(show, 'boolean') ? (!show && 'hidden') : 'hidden dropdown-menu',
+            "animate-slide-down absolute bg-white text-sm list-none divide-gray-100 rounded-sm shadow-md border",
+            !(show ?? isOpen) && 'hidden',
+            align === 'right' && 'right-0 left-auto',
             dropdownSizeMap[size],
             className
         )}>

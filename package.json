@@ -1,6 +1,6 @@
 {
     "name": "my-alyce-component-lib",
-    "version": "0.0.12",
+    "version": "0.0.14",
     "author": "Dovydas Stirpeika <Dovy91@gmail.com>",
     "license": "MIT",
     "main": "dist/index.js",
