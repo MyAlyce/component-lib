@@ -32,7 +32,7 @@ export function TopBar({ fixed, onMenuExpand, leftNavItems, rightNavItems, zInde
 
     return <nav
         className={classNames(
-            "bg-white shadow dark:bg-gray-800 flex justify-between p-2",
+            "bg-white shadow dark:bg-gray-800 flex justify-between p-2 border",
             fixed && 'fixed top-0 left-0 right-0',
             className
         )}
