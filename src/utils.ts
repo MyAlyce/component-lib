@@ -17,7 +17,7 @@ export const gradientFrom = {
 
 export const gradientTo = {
     
-}
+};
 
 // export const 
 

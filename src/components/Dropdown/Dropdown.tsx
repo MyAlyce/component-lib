@@ -7,7 +7,7 @@ import type { ObjMap, Size } from '../..';
 // TODO:
     // allow dropdown to be custom jsx
 
-export type DropdownProps = {
+export type DropdownProps = PropsWithChildren<{
     header?: JSX.Element | string;
 
     items: DropdownItemProps[];
@@ -28,7 +28,7 @@ export type DropdownProps = {
 
     /** If the dropdown is close to the right edge of the browser, you can add `right`. Default: 'left' */
     align?: 'left' | 'right';
-}
+}>;
 
 const dropdownSizeMap: ObjMap<Size | 'auto'> = { xs: 'w-30', sm: 'w-44', md: 'w-60', lg: 'w-80', xl: 'w-96', auto: 'w-full'};
 export function Dropdown({
@@ -36,7 +36,7 @@ export function Dropdown({
     itemBorders, size = 'md',
     className, align = 'left',
     containerClassName
-}: PropsWithChildren<DropdownProps>) {
+}: DropdownProps) {
     const [isOpen, setIsOpen] = useState(show || false);
     const close = () => setTimeout(() => setIsOpen(false), 0);
     const container = useRef<HTMLDivElement>(null);

@@ -1,6 +1,6 @@
 import { action } from '@storybook/addon-actions';
 import type { ComponentMeta, ComponentStory } from '@storybook/react';
-import React, { PropsWithChildren } from 'react';
+import React from 'react';
 import { avatarUtils } from '../../stories.utils';
 import { Avatar } from '../Avatar/Avatar';
 import { Button } from '../Button/Button';
@@ -10,7 +10,7 @@ import { FaUserFriends } from 'react-icons/fa';
 import { GrDocumentText } from 'react-icons/gr';
 import type { IconType } from 'react-icons/lib';
 
-const args: PropsWithChildren<DropdownProps> = {
+const args: DropdownProps = {
     items: [
         { type: 'action', title: 'action-1', onClick: action('action-1') },
         { type: 'action', title: 'action-2', onClick: action('action-2') },

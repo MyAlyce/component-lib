@@ -23,7 +23,7 @@ export type TopBarProps = {
 
     zIndex?: number;
 
-    className: string;
+    className?: string;
 }
 
 export function TopBar({ fixed, onMenuExpand, leftNavItems, rightNavItems, zIndex, className }: TopBarProps) {

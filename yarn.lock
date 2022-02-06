@@ -1297,10 +1297,10 @@
   resolved "https://registry.yarnpkg.com/@gar/promisify/-/promisify-1.1.2.tgz#30aa825f11d438671d585bd44e7fd564535fc210"
   integrity sha512-82cpyJyKRoQoRi+14ibCeGPu0CwypgtBAdBhq1WfvagpCZNKqwXbKwXllYSMG91DhmG4jt9gN8eP6lGOtozuaw==
 
-"@giveback007/util-lib@^0.23.2":
-  version "0.23.2"
-  resolved "https://registry.yarnpkg.com/@giveback007/util-lib/-/util-lib-0.23.2.tgz#7e76006c38a532c51451e647c67f84dc8e4599af"
-  integrity sha512-NMKLH22CvDww/A8u87P97JpvJK78B0h8bhuJp/Z84IRt7FkZsksi4nScre8HZgtgyGyXosC/cUq5A2kkAN8mFw==
+"@giveback007/util-lib@^0.24.1":
+  version "0.24.1"
+  resolved "https://registry.yarnpkg.com/@giveback007/util-lib/-/util-lib-0.24.1.tgz#df5d2511bf642f8f6ad001e7bd859f4fe57a0e5d"
+  integrity sha512-1IxkuSY8aOVSBMrFnQGfvJr9BMyaBYocAJ9jELJmmArMsfdoKs5U++NmV1I6N1v+OWU9Uad0o6QJo9wKsdGcWQ==
   dependencies:
     tslib "~2.0.3"
 

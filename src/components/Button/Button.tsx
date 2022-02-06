@@ -3,7 +3,7 @@ import React, { PropsWithChildren, useState } from 'react';
 import type { ColorTypes, ObjMap, Size } from '../..';
 import { Badge } from '../Badge/Badge';
 
-export interface ButtonProps {
+export type ButtonProps = PropsWithChildren<{
   /** Size of the button, choose `'auto'` to have the button fit the container. Default: `'md'` */
   size?: Size | 'auto';
   /** Choose a color type for the button. Default: `'secondary'` */
@@ -17,7 +17,7 @@ export interface ButtonProps {
   badge?: number | boolean;
   className?: string;
   disabled?: boolean;
-}
+}>;
 
 
 const buttonSizeMap: ObjMap<Size | 'auto'> = { xs: 'text-xs p-0.5 px-1', sm: 'text-sm p-1 px-2', md: 'text-base p-1.5 px-3', lg: 'text-lg p-2 px-4', xl: 'text-xl p-2.5 px-5', auto: 'p-1.5 text-base h-full w-full'};
@@ -29,7 +29,7 @@ const buttonBadgeMap: ObjMap<Size | 'auto', Size> = { xs: 'xs', sm: 'sm', md: 'm
 export const Button = ({
   size = 'md', type = 'secondary', shape = 'round',
   outline = false, badge, className, disabled, children, ...props
-}: PropsWithChildren<ButtonProps>) => {
+}: ButtonProps) => {
   const [isHover, setIsHover] = useState(false);
 
   return (

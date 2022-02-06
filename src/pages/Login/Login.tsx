@@ -82,8 +82,11 @@ export type LoginPageProps = {
 
 export function LoginPage({
     thirdPartyLogins, useRegularLogin, brand, companyName,
-    className, bgGradientFrom, bgGradientTo, isLoading, gradient
+    className, bgGradientFrom, bgGradientTo, 
+    isLoading,
+    gradient
 }: LoginPageProps) {
+    isLoading;
     const useGradient = bgGradientFrom && bgGradientTo && gradient;
     
     return <div className={classNames(

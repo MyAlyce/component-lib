@@ -8,7 +8,7 @@ import { Avatar } from '../../components/Avatar/Avatar';
   // icon-mode (check tailwind media)
 
 export type NavDrawerProps = {
-    /** Set NavBar to position fixed at the `left` or `right` of screen. Default: `"left"` */
+    /** Set NavBar to position fixed at the `left` or `right` of screen. Default: `false` */
     fixed?: 'left' | 'right' | false;
 
     zIndex?: number;
@@ -34,10 +34,12 @@ export type NavDrawerProps = {
     menuItems: (MenuSubmenu | MenuAction | MenuSection | MenuBreak)[];
 
     isOpen: boolean;
+
+    className?: string;
 }
 
 export const NavDrawer = ({
-    brand, fixed, zIndex = 100, user, onBrandClick, onAvatarClick, onBackdropClick, menuItems, isOpen
+    brand, fixed = false, zIndex = 100, user, onBrandClick, onAvatarClick, onBackdropClick, menuItems, isOpen
 }: NavDrawerProps) => <>{fixed && isOpen && <Backdrop {...{ onBackdropClick, zIndex: zIndex - 1}} />}<div
     className={classNames(`
         flex flex-col
