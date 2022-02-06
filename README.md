@@ -1,5 +1,5 @@
 # View Storybook:
-## [Go To Docs](myalyce-storybook.netlify.app)
+## [Go To Docs](https://myalyce-storybook.netlify.app/)
 
 * Step 1 Install
 * Step 2 Import CSS

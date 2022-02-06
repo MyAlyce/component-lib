@@ -11,4 +11,50 @@ export function clickOutListener(ref: RefObject<any>, onClickOut: () => any) {
     );
 }
 
+export const gradientFrom = {
+
+};
+
+export const gradientTo = {
+    
+}
+
 // export const 
+
+// [
+//     "red-400",
+//     "red-400-accent",
+//     "pink-400",
+//     "pink-400-accent",
+//     "purple-400",
+//     "purple-400-accent",
+//     "deep-purple-400",
+//     "deep-purple-400-accent",
+//     "indigo-400",
+//     "indigo-400-accent",
+//     "blue-400",
+//     "blue-400-accent",
+//     "light-blue-400",
+//     "light-blue-400-accent",
+//     "cyan-400",
+//     "cyan-400-accent",
+//     "teal-400",
+//     "teal-400-accent",
+//     "green-400",
+//     "green-400-accent",
+//     "light-green-400",
+//     "light-green-400-accent",
+//     "lime-400",
+//     "lime-400-accent",
+//     "yellow-400",
+//     "yellow-400-accent",
+//     "amber-400",
+//     "amber-400-accent",
+//     "orange-400",
+//     "orange-400-accent",
+//     "deep-orange-400",
+//     "deep-orange-400-accent",
+//     "brown-400",
+//     "grey-400",
+//     "blue-grey-400"
+// ]

@@ -8,7 +8,7 @@ import { IoLogoWechat } from 'react-icons/io5';
 import { BsClipboardData } from 'react-icons/bs';
 import { CgMenuRound } from 'react-icons/cg';
 import { AiOutlineInfoCircle } from 'react-icons/ai';
-import logo from './generic-logo.png';
+import logo from '../../assets/generic-logo-1.png';
 
 const args: NavDrawerProps = {
   isOpen: true,
