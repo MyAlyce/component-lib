@@ -1,4 +1,4 @@
-import { RefObject, useEffect } from "react";
+import { RefObject, useEffect, useState } from "react";
 
 export const cssSizeMap = {
     xs: 'h-6 w-6', sm: 'h-9 w-9', md: 'h-16 w-16', lg: 'h-32 w-32', xl: 'h-64 w-64', auto: 'h-full w-full'
@@ -10,6 +10,22 @@ export function clickOutListener(ref: RefObject<any>, onClickOut: () => any) {
         [ref]
     );
 }
+
+export const useRefDimensions = (ref: RefObject<HTMLElement>) => {
+    const [dimensions, setDimensions] = useState({ width: 0, height: 0 });
+
+    useEffect(() => {
+        if (ref.current) {
+          const boundingRect = ref.current.getBoundingClientRect();
+          const { width, height } = boundingRect;
+          
+        //   if (width !== dimensions.width || height !== dimensions.height)
+            setDimensions({ width, height });
+        }
+    }, [ref.current?.offsetHeight, ref.current?.offsetWidth]);
+
+    return dimensions;
+};
 
 export const gradientFrom = {
 
