@@ -2,8 +2,11 @@ import { isType } from '@giveback007/util-lib';
 import React, { MouseEventHandler, useState } from 'react';
 import type { DataState, Size } from '../..';
 import { Badge } from '../Badge/Badge';
-import { cssSizeMap } from '../../utils';
 import classNames from 'classnames';
+
+export const sizeMap = {
+    xs: 'h-6 w-6', sm: 'h-9 w-9', md: 'h-16 w-16', lg: 'h-32 w-32', xl: 'h-64 w-64', auto: 'h-full w-full'
+} as const;
 
 import { Spinner } from '../Spinner/Spinner';
 
@@ -40,7 +43,7 @@ export const Avatar = (p: AvatarProps) => {
         className={classNames(`
             flex relative justify-center items-center
             m-1 mr-2 rounded-full text-white`,
-            cssSizeMap[size],
+            sizeMap[size],
             !(backgroundColor || dataState === 'loading') &&'bg-secondary-500',
             dataState === 'loading' && ' overflow-hidden',
             onClick && 'cursor-pointer',

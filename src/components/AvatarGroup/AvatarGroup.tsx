@@ -1,8 +1,11 @@
 import classNames from 'classnames';
 import React, { MouseEventHandler } from 'react';
 import type { DataState, Size } from '../..';
-import { cssSizeMap } from '../../utils';
 import { AvatarInner, AvatarInnerProps, AvatarStatus } from "../Avatar/Avatar";
+
+export const sizeMap = {
+    xs: 'h-6 w-6', sm: 'h-9 w-9', md: 'h-16 w-16', lg: 'h-32 w-32', xl: 'h-64 w-64', auto: 'h-full w-full'
+} as const;
 
 export type AvatarGroupProps = {
     avatars: {
@@ -36,7 +39,7 @@ export const AvatarGroup = (p: AvatarGroupProps) => {
                 flex flex-shrink-0 relative
                 bg-secondary-500
                 justify-center items-center m-1 mr-2 -ml-3 rounded-full border-r-2 text-xl text-white`,
-                cssSizeMap[size]
+                sizeMap[size]
             )}
         >
             <AvatarInner size={size} dataState='done' name={`+${nNotShow}`} />
@@ -48,7 +51,7 @@ export const AvatarGroup = (p: AvatarGroupProps) => {
                 className={classNames(
                     `flex flex-shrink-0 relative justify-center items-center m-1 mr-2 -ml-3 rounded-full border-r-2 border-white`,
                     !(av.backgroundColor || av.dataState === 'loading') && 'bg-secondary-500',
-                    cssSizeMap[size],
+                    sizeMap[size],
                 )}
                 style={{ backgroundColor }}
                 key={i}

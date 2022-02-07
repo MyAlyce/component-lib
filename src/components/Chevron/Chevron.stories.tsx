@@ -7,7 +7,7 @@ const meta: ComponentMeta<typeof Chevron> = {
   component: Chevron,
   // More on argTypes: https://storybook.js.org/docs/react/api/argtypes
   args: {
-    icon: 1,
+    icon: 7,
     direction: 'down',
     size: 'lg'
   },

@@ -12,7 +12,7 @@ export type ButtonProps = PropsWithChildren<{
   shape?: 'round' | 'flat';
   /** Button will have no background, only border. Default: `false` */
   outline?: boolean;
-  onClick?: () => void;
+  onClick?: () => any;
   /** Can add a badge to the button */
   badge?: number | boolean;
   className?: string;
