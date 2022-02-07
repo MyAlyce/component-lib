@@ -17,3 +17,6 @@ export * from './forms/Toggle/Toggle';
 // -- NAVIGATION -- //
 export * from './navigation/NavDrawer/NavDrawer';
 export * from './navigation/TopBar/TopBar';
+
+// -- PAGES -- //
+export * from './pages/Login/Login';

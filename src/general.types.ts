@@ -1,3 +1,5 @@
+import type { CSSProperties } from "react";
+
 export type Size = 'xs' | 'sm' | 'md' | 'lg' | 'xl';
 
 export type DataState = 'done' | 'loading' | 'error';
@@ -9,3 +11,8 @@ export type ObjMap<S extends string, T = string> = { [K in S]: T };
 export type AnyFct = () => any;
 
 export type NavItem = { onClick: AnyFct, children: JSX.Element | string };
+
+export type ComponentBase = {
+    className?: string;
+    style?: CSSProperties;
+}

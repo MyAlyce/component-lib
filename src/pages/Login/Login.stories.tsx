@@ -33,8 +33,8 @@ const meta: ComponentMeta<typeof LoginPage> = {
         brand: <img src={logo} className='max-w-xs px-5 mb-14 w-full' />,
         companyName: 'MyCompany',
         gradient: 8,
-        bgGradientFrom: 'green',
-        bgGradientTo: 'indigo',
+        bgGradientFrom: 'blue',
+        bgGradientTo: 'teal',
     }
 };
 

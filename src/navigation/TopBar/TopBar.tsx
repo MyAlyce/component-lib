@@ -15,7 +15,7 @@ export type TopBarProps = {
     // marginRight: string; // TODO (check admin lte)
 
     /** Will add an element that will match the height of TopBar (useful for when the element is fixed to top) */
-    addSpacer: boolean;
+    addSpacer?: boolean;
 
     // search: // TODO this will be more involved
 
@@ -31,7 +31,7 @@ export type TopBarProps = {
 
 export function TopBar({
     fixed, onMenuExpand, leftNavItems, rightNavItems, zIndex, className,
-    addSpacer
+    addSpacer = false,
 }: TopBarProps) {
     const [height, setHeight] = useState(0);
     const elRef = useRef<HTMLElement>(null);

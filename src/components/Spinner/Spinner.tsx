@@ -1,8 +1,11 @@
 import classNames from 'classnames';
 import React from 'react';
 import type { Size } from '../..';
-import { cssSizeMap } from '../../utils';
 import { spinnersSvg } from './SpinnerIcons';
+
+export const spinnerSizeMap = {
+    xs: 'h-6 w-6', sm: 'h-9 w-9', md: 'h-16 w-16', lg: 'h-32 w-32', xl: 'h-64 w-64', auto: 'h-full w-full'
+} as const;
 
 export type SpinnerProps = {
     /** If not set or set to `"auto"` will automatically fill the available space */
@@ -11,7 +14,7 @@ export type SpinnerProps = {
     className?: string;
 }
 
-export const Spinner = ({ type = 1, size = 'auto', className }: SpinnerProps) => <div className={classNames("overflow-hidden", className, cssSizeMap[size])}>
+export const Spinner = ({ type = 1, size = 'auto', className }: SpinnerProps) => <div className={classNames("overflow-hidden", className, spinnerSizeMap[size])}>
     {type === 'pulse' ?
         <div className="bg-secondary-300 h-full w-full animate-pulse" />
         :

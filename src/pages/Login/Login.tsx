@@ -1,71 +1,12 @@
 import classNames from "classnames";
 import React from "react";
 import { Button } from "../../components/Button/Button";
+import { gradients, grFrom, grTo } from "./LoginGradients";
+import type { ComponentBase } from "../..";
 
 type ThirdPartyBtnProps = { name: string; logo: JSX.Element; onClick: () => any };
 
-const gradients = {
-    1: 'bg-gradient-to-t',
-    2: 'bg-gradient-to-tr',
-    3: 'bg-gradient-to-r',
-    4: 'bg-gradient-to-br',
-    5: 'bg-gradient-to-b',
-    6: 'bg-gradient-to-bl',
-    7: 'bg-gradient-to-l',
-    8: 'bg-gradient-to-tl',
-} as const;
 
-const grFrom = {
-    slate: 'from-slate-400',
-    gray: 'from-gray-400',
-    red: "from-red-400",
-    pink: "from-pink-400",
-    purple: "from-purple-400",
-    'deep-purple': "from-deep-purple-400",
-    indigo: "from-indigo-400",
-    blue: "from-blue-400",
-    'light-blue': "from-light-blue-400",
-    cyan: "from-cyan-400",
-    teal: "from-teal-400",
-    green: "from-green-400",
-    'light-green': "from-light-green-400",
-    lime: "from-lime-400",
-    yellow: "from-yellow-400",
-    amber: "from-amber-400",
-    orange: "from-orange-400",
-    'deep-orange': "from-deep-orange-400",
-    brown: "from-brown-400",
-    grey: "from-grey-400",
-    'blue-grey': "from-blue-grey-400",
-    emerald: 'from-emerald-400',
-    rose: 'from-rose-400',
-} as const;
-
-const grTo = {
-    slate: 'from-slate-900',
-    gray: 'from-gray-900',
-    red: "from-red-900",
-    pink: "from-pink-900",
-    purple: "from-purple-900",
-    'deep-purple': "from-deep-purple-900",
-    indigo: "from-indigo-900",
-    blue: "from-blue-900",
-    'light-blue': "from-light-blue-900",
-    cyan: "from-cyan-900",
-    teal: "from-teal-900",
-    green: "from-green-900",
-    'light-green': "from-light-green-900",
-    lime: "from-lime-900",
-    yellow: "from-yellow-900",
-    amber: "from-amber-900",
-    orange: "from-orange-900",
-    'deep-orange': "from-deep-orange-900",
-    brown: "from-brown-900",
-    grey: "from-grey-900",
-    'blue-grey': "from-blue-grey-900",
-    emerald: 'from-emerald-900',
-    rose: 'from-rose-900',
-} as const;
 
 export type LoginPageProps = {
     isLoading?: boolean;
@@ -73,30 +14,33 @@ export type LoginPageProps = {
     useRegularLogin?: boolean;
     brand?: JSX.Element;
     companyName?: string;
-    className?: string;
-    /** Applies background gradient */
+    /** Applies background gradient. Need to use all 3 properties `gradient`, `bgGradientFrom`, & `bgGradientTo` to activate the gradient. */
     gradient?: keyof typeof gradients;
     bgGradientFrom?: keyof typeof grFrom;
     bgGradientTo?: keyof typeof grTo;
-}
+} & ComponentBase;
 
 export function LoginPage({
     thirdPartyLogins, useRegularLogin, brand, companyName,
-    className, bgGradientFrom, bgGradientTo, 
-    isLoading, gradient
+    bgGradientFrom, bgGradientTo, 
+    isLoading, gradient,
+    className, style
 }: LoginPageProps) {
     isLoading;
     const useGradient = bgGradientFrom && bgGradientTo && gradient;
     
-    return <div className={classNames(
-        "h-full w-full py-14 px-4",
-        useGradient && gradients[gradient],
-        useGradient && grFrom[bgGradientFrom],
-        useGradient && grTo[bgGradientTo],
-        className,
-    )}>
+    return <div 
+        className={classNames(
+            "h-full w-full py-14 px-4",
+            useGradient && gradients[gradient],
+            useGradient && grFrom[bgGradientFrom],
+            useGradient && grTo[bgGradientTo],
+            className,
+        )}
+        style={style}
+    >
 
-        <div className="flex flex-col items-center justify-center from-">
+        <div className="flex flex-col items-center justify-center">
             {brand}
 
             <div className="bg-white shadow rounded lg:w-2/3 md:w-3/4 max-w-lg w-full p-10">
@@ -133,7 +77,13 @@ export function LoginPage({
                     </div>
                 </div>
                 <div className="mt-8">
-                    <button role="button" className="focus:ring-2 focus:ring-offset-2 focus:ring-indigo-700 text-sm font-semibold leading-none text-white focus:outline-none bg-indigo-700 border rounded hover:bg-indigo-600 py-4 w-full">Create my account</button>
+                    <Button
+                        size="auto"
+                        type="primary"
+                        className="font-bold leading-none border rounded py-2"
+                    >
+                        Log In
+                    </Button>
                 </div></>}
             </div>
         </div>
