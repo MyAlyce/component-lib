@@ -66,7 +66,6 @@ export const NavDrawer = ({
         className={classNames('border-b border-secondary-200 px-2 py-1.5', onBrandClick && 'cursor-pointer')}
         onClick={onBrandClick}
     >
-        {console.log('BRAND:', brand)}
         {isType(brand, 'string') ? <h2
             className={classNames("text-3xl font-semibold text-gray-800 dark:text-white")}
         >{brand}</h2> : brand}
