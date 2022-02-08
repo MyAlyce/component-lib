@@ -1,5 +1,5 @@
 import classNames from 'classnames';
-import React, { PropsWithChildren, useState } from 'react';
+import React, { HTMLProps, PropsWithChildren, useState } from 'react';
 import type { ColorTypes, ObjMap, Size } from '../..';
 import { Badge } from '../Badge/Badge';
 
@@ -17,6 +17,9 @@ export type ButtonProps = PropsWithChildren<{
   badge?: number | boolean;
   className?: string;
   disabled?: boolean;
+
+  /** Allows to set the button html type. Default: `"button"` */
+  htmlType?: 'reset' | 'submit' | 'button'
 }>;
 
 
@@ -25,16 +28,17 @@ const buttonColorMap: ObjMap<ColorTypes> = { primary: 'bg-primary-500', secondar
 const buttonHoverMap: ObjMap<ColorTypes> = { primary: 'hover:bg-primary-600', secondary: 'hover:bg-secondary-600', success: 'hover:bg-success-600', info: 'hover:bg-info-600', danger: 'hover:bg-danger-600', warning: 'hover:bg-warning-600'};
 const buttonBorderMap: ObjMap<ColorTypes> = { primary: 'border-primary-500 text-primary-500', secondary: 'border-secondary-500 text-secondary-500', success: 'border-success-500 text-success-500', info: 'border-info-500 text-info-500', danger: 'border-danger-500 text-danger-500', warning: 'border-warning-500 text-warning-500'};
 const buttonBadgeMap: ObjMap<Size | 'auto', Size> = { xs: 'xs', sm: 'sm', md: 'md', lg: 'md', xl: 'lg', auto: 'md' };
-// size === 'auto' ? 'md' : size
+
 export const Button = ({
   size = 'md', type = 'secondary', shape = 'round',
-  outline = false, badge, className, disabled, children, ...props
+  outline = false, badge, className, disabled, children,
+  htmlType = "button", ...props
 }: ButtonProps) => {
   const [isHover, setIsHover] = useState(false);
 
   return (
     <button
-      type="button"
+      type={htmlType}
       className={classNames(
         "relative text-gray-100 font-normal border-2 transition-all",
         buttonSizeMap[size],

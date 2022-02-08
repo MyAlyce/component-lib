@@ -1,8 +1,9 @@
-import React from 'react';
-import classNames from 'classnames';
 import type { HTMLProps } from 'react';
 import type { ColorTypes } from '../../general.types';
-import { Button } from '../..';
+import type { UseFormRegisterReturn } from 'react-hook-form';
+import React from 'react';
+import classNames from 'classnames';
+import { Button, ComponentBase } from '../..';
 
 export type TextInputProps = {
     // size?: Size | 'auto';
@@ -17,6 +18,9 @@ export type TextInputProps = {
      * Otherwise `className` will be applied.
      */
     inputClassName?: string;
+
+    /** Allows to register input for `react-hook-form` */
+    register?: UseFormRegisterReturn;
 } & HTMLProps<HTMLInputElement>;
 
 const TextInputBorderMap = {
@@ -28,11 +32,12 @@ const TextInputBorderMap = {
 export const TextInput = ({
     validation = 'default', className,
     label, labelType = 'default', inputClassName,
-    button, ...props
+    button, register, ...props
 }: TextInputProps) => {
     const lbType = (label || false) && labelType;
     const input = <input
         {...props}
+        alt={label}
         className={classNames(
             "px-3 py-1.5 outline-0 border w-full",
             TextInputBorderMap[validation],
@@ -41,6 +46,8 @@ export const TextInput = ({
             !button && 'rounded-r',
             !(label || button) ? className : inputClassName,
         )}
+        {...register}
+        
     />;
 
     return (label || button) ? <div className={classNames(

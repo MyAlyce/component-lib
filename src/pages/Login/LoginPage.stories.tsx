@@ -1,8 +1,9 @@
 import React from "react";
-import { LoginPage } from "./Login";
+import { LoginPage, LoginPageProps } from "./LoginPage";
 import type { ComponentMeta, ComponentStory } from "@storybook/react";
 import { action } from "@storybook/addon-actions";
-import logo from '../../assets/generic-logo-2.png';
+import logo1 from '../../assets/generic-logo-1.png';
+import logo2 from '../../assets/generic-logo-2.png';
 
 const logos = {
     google: <svg width="19" height="20" viewBox="0 0 19 20" fill="none" xmlns="http://www.w3.org/2000/svg">
@@ -19,23 +20,25 @@ const logos = {
     </svg>
 };
 
+const args: LoginPageProps = {
+    thirdPartyLogins: [
+        { name: 'Google', logo: logos['google'], onClick: action('Login-Google')  },
+        { name: 'Github', logo: logos['github'], onClick: action('Login-Google')  },
+        { name: 'Twitter', logo: logos['twitter'], onClick: action('Login-Google')  },
+    ],
+    useRegularLogin: true,
+    isLoading: false,
+    brand: <img src={logo2} className='max-w-xs px-5 mb-14 w-full' />,
+    companyName: 'MyCompany',
+    gradient: 8,
+    bgGradientFrom: 'blue',
+    bgGradientTo: 'teal',
+};
+
 const meta: ComponentMeta<typeof LoginPage> = {
     title: 'Page/Login',
     component: LoginPage,
-    args: {
-        thirdPartyLogins: [
-            { name: 'Google', logo: logos['google'], onClick: action('Login-Google')  },
-            { name: 'Github', logo: logos['github'], onClick: action('Login-Google')  },
-            { name: 'Twitter', logo: logos['twitter'], onClick: action('Login-Google')  },
-        ],
-        useRegularLogin: true,
-        isLoading: false,
-        brand: <img src={logo} className='max-w-xs px-5 mb-14 w-full' />,
-        companyName: 'MyCompany',
-        gradient: 8,
-        bgGradientFrom: 'blue',
-        bgGradientTo: 'teal',
-    }
+    args,
 };
 
 export default meta;
@@ -45,5 +48,10 @@ const Template: ComponentStory<typeof LoginPage> = (args) => <LoginPage {...args
 export const Example = Template.bind({});
 
 export const RegularLoginOnly = Template.bind({});
+RegularLoginOnly.args = { ...args, thirdPartyLogins: undefined };
 
 export const ThirdPartyLogin = Template.bind({});
+ThirdPartyLogin.args = { ...args, useRegularLogin: false };
+
+export const NoBackground = Template.bind({});
+NoBackground.args = { ...args, gradient: undefined, brand: <img src={logo1} className='max-w-xs px-5 mb-14 w-full' /> };

@@ -1,7 +1,7 @@
 import { nonValue, debounceTimeOut } from '@giveback007/util-lib';
 import classNames from 'classnames';
 import React, { Component } from 'react';
-import type { ColorTypes, ObjMap } from '../..';
+import type { ColorTypes, ComponentBase, ObjMap } from '../../general.types';
 import { AlertIcon } from './AlertIcon';
 
 export type AlertProps = {
@@ -11,8 +11,7 @@ export type AlertProps = {
     onClose?: () => any;
     title: string;
     text?: string;
-    className?: string;
-}
+} & ComponentBase;
 
 type S = {
     botW: number;
@@ -25,7 +24,7 @@ type S = {
 const AlertColorMap: ObjMap<ColorTypes> = { primary: 'text-primary-600', secondary: 'text-secondary-600', info: 'text-info-600', warning: 'text-warning-600', danger: 'text-danger-600', success: 'text-success-600' };
 const AlertTextColor: ObjMap<ColorTypes> = { primary: 'text-primary-900', secondary: 'text-secondary-900', info: 'text-info-900', warning: 'text-warning-900', danger: 'text-danger-900', success: 'text-success-900' };
 export class Alert extends Component<AlertProps> {
-
+    
     state: S = {
         botW: 100,
         isClosing: false,
@@ -75,7 +74,7 @@ export class Alert extends Component<AlertProps> {
     componentWillUnmount = () => this.closingDebounce('cancel');
 
     render = () => {
-        const { title, text, type, className } = this.props;
+        const { title, text, type, className, style } = this.props;
         const { isHover, isClosing, botW, transitionDuration: botTime, isClosed } = this.state;
         const transitionDuration = isHover ? undefined : botTime;
         
@@ -88,6 +87,7 @@ export class Alert extends Component<AlertProps> {
 
         return isClosed ? null : <div
             className={containerClassName}
+            style={style}
             onMouseEnter={() => this.handleMouseHover(true)}
             onMouseLeave={() => this.handleMouseHover(false)}
         >

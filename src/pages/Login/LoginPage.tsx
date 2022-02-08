@@ -1,14 +1,14 @@
 import classNames from "classnames";
-import React, {  } from "react";
+import React from "react";
+import { SubmitHandler, useForm } from "react-hook-form";
 import { Spinner } from "../..";
 import { Button } from "../../components/Button/Button";
 import { TextInput } from "../../forms/TextInput/TextInput";
 import type { ComponentBase, jsx_ } from "../../general.types";
+import { regexpUtil } from "../../utils";
 import { gradients, grFrom, grTo } from "./LoginGradients";
 
 type ThirdPartyBtnProps = { name: string; logo: jsx_; onClick: () => any; };
-
-
 
 export type LoginPageProps = {
     isLoading?: boolean;
@@ -28,6 +28,11 @@ export type LoginPageProps = {
     onLoginClick?: (credentials: { email: string; password: string; }) => any;
 } & ComponentBase;
 
+type FormData = {
+    email: string;
+    password: string;
+}
+
 export function LoginPage({
     thirdPartyLogins, useRegularLogin, brand, companyName,
     bgGradientFrom, bgGradientTo, onLoginClick,
@@ -35,11 +40,28 @@ export function LoginPage({
     className, style
 }: LoginPageProps) {
     // https://github.com/BuckleUp-Health/BuckleUp-PWA/blob/main/frontend/views/Login.view.tsx
-    // const [s, setState] = useState({ loading: false, failedLoginNotify: false });
+    const { register, handleSubmit, formState, reset, setValue } = useForm<FormData>();
+    const { errors: err, submitCount } = formState;
+    
+    const onSubmit: SubmitHandler<FormData> = data => {
+        console.log(data)
+        reset();
+        setValue('email', data.email);
+        setValue('password', data.password);
+
+        onLoginClick?.(data);
+    };
     
     const inputParentClass = 'rounded-md text-sm font-medium';
     const inputClass = 'py-2.5 pl-3 text-base font-semibold ' + (isLoading ? 'bg-gray-200' : 'bg-gray-50');
     const useGradient = bgGradientFrom && bgGradientTo && gradient;
+
+    const emailErr = submitCount > 0 && err.email;
+    const passErr = submitCount > 0 && err.password;
+
+    console.log(err);
+
+    // const x = register("email", { required: true, pattern: regexpUtil.email })
     
     return <div
         className={classNames(
@@ -55,7 +77,10 @@ export function LoginPage({
         <div className="flex flex-col items-center justify-center">
             {brand}
 
-            <div className="bg-white shadow rounded lg:w-2/3 md:w-3/4 max-w-lg w-full p-10">
+            <form
+                className="bg-white shadow-lg rounded lg:w-2/3 md:w-3/4 max-w-lg w-full p-10 border border-secondary-200"
+                onSubmit={handleSubmit(onSubmit)}
+            >
                 <p tabIndex={0} className="focus:outline-none text-2xl font-extrabold leading-6 text-gray-800">
                     Login to {companyName || 'your account'}
                 </p>
@@ -73,7 +98,7 @@ export function LoginPage({
                 </p>}
 
                 <div className="mt-4"/>
-                {thirdPartyLogins?.map(x => <ThirdPartyBtn {...x} disabled={isLoading} />)}
+                {thirdPartyLogins?.map((x, i) => <ThirdPartyBtn {...x} disabled={isLoading} key={i} />)}
                 
                 {thirdPartyLogins && useRegularLogin && <div className="w-full flex items-center justify-between py-5">
                     <hr className="w-full bg-gray-400" />
@@ -87,25 +112,33 @@ export function LoginPage({
                         className={inputParentClass}
                         inputClassName={inputClass}
                         disabled={isLoading}
+                        validation={emailErr ? 'danger' : 'default'}
+                        register={register("email", { required: true, pattern: regexpUtil.email })}
                     />
+                    <div className="font-medium tracking-wide text-danger-500 text-sm mt-1 ml-1">&#8205;{emailErr ? 'Please enter a valid email' : ''}</div>
+                    
                     <TextInput 
                         label="Password"
-                        className={"mt-4 " + inputParentClass}
-                        inputClassName={inputClass} type="password"
+                        type="password"
+                        className={inputParentClass}
+                        inputClassName={inputClass}
                         disabled={isLoading}
+                        validation={emailErr ? 'danger' : 'default'}
+                        register={register("password", { required: true })}
                     />
+                    <div className="font-medium tracking-wide text-danger-500 text-sm mt-1 ml-1">&#8205;{passErr ? 'Please enter your password' : ''}</div>
                     
-                    <div className="mt-8">
+                    <div className="mt-6">
                         <Button
                             size="auto"
                             type="primary"
-                            className="font-bold leading-none border rounded h-12"
+                            className="font-bold leading-none border rounded h-12 text-lg"
                             disabled={isLoading}
-                            onClick={onLoginClick && (() => onLoginClick({} as any))}
+                            htmlType="submit"
                         >{isLoading ? <Spinner size="xs" className="m-auto"/> : 'Log In'}</Button>
                     </div>
                 </>}
-            </div>
+            </form>
         </div>
     </div>;
 }

@@ -4,9 +4,13 @@ export * from './general.types';
 export * from './components/Accordion/Accordion';
 export * from './components/Alert/Alert';
 export * from './components/Avatar/Avatar';
+export * from './components/AvatarGroup/AvatarGroup';
+export * from './components/Backdrop/Backdrop';
 export * from './components/Badge/Badge';
 export * from './components/Button/Button';
+export * from './components/Chevron/Chevron';
 export * from './components/Dropdown/Dropdown';
+export * from './components/Modal/Modal';
 export * from './components/Spinner/Spinner';
 
 // -- FORMS -- //
@@ -19,4 +23,4 @@ export * from './navigation/NavDrawer/NavDrawer';
 export * from './navigation/TopBar/TopBar';
 
 // -- PAGES -- //
-export * from './pages/Login/Login';
+export * from './pages/Login/LoginPage';
