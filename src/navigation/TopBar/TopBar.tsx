@@ -33,7 +33,7 @@ export type TopBarProps = {
 
 export function TopBar({
     fixed, onMenuExpand, leftNavItems,
-    rightNavItems, zIndex = 1000, className, style = {},
+    rightNavItems, zIndex = 1000, className, style,
     addSpacer = false, menuIsExpanded
 }: TopBarProps) {
     const [height, setHeight] = useState(0);

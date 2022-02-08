@@ -1,6 +1,6 @@
 import { isType } from '@giveback007/util-lib';
 import React, { MouseEventHandler, useState } from 'react';
-import type { DataState, Size } from '../..';
+import type { DataState, Size } from '../../general.types';
 import { Badge } from '../Badge/Badge';
 import classNames from 'classnames';
 

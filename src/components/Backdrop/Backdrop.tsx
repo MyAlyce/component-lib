@@ -13,7 +13,7 @@ export type BackdropProps = {
 
 export const Backdrop = ({
     zIndex, onBackdropClick, maxOpacity = 40, transition = true,
-    style = {}, className
+    style, className
 }: BackdropProps) => {
     const [opacity, setOpacity] = useState(!transition);
     useEffect(() => !opacity && setTimeout(() => setOpacity(true), 0) as any, [opacity]);

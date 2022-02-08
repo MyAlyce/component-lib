@@ -1,6 +1,6 @@
 import classNames from 'classnames';
 import React, { MouseEventHandler } from 'react';
-import type { DataState, Size } from '../..';
+import type { DataState, Size } from '../../general.types';
 import { AvatarInner, AvatarInnerProps, AvatarStatus } from "../Avatar/Avatar";
 
 const sizeMap = {

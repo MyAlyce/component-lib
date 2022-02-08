@@ -3,7 +3,7 @@ import type { ComponentStory, ComponentMeta } from '@storybook/react';
 import { Modal } from './Modal';
 import { loremIpsum } from '../../utils';
 import { Button } from '../Button/Button';
-import { action, actions } from '@storybook/addon-actions';
+import { action } from '@storybook/addon-actions';
 
 // const cancel = actions('Cancel').Cancel;
 // cancel
@@ -18,8 +18,8 @@ const meta: ComponentMeta<typeof Modal> = {
     </div>
 
     <div className="flex justify-end pt-2">
-      <Button type='secondary' size='lg' onClick={actions('Cancel').Cancel}>Cancel</Button>
-      <Button type='primary' size='lg' className='ml-3' onClick={actions('Confirm').Confirm}>Confirm</Button>
+      <Button type='secondary' size='lg' onClick={action('Cancel')}>Cancel</Button>
+      <Button type='primary' size='lg' className='ml-3' onClick={action('Confirm')}>Confirm</Button>
     </div></>,
   },
   argTypes: {

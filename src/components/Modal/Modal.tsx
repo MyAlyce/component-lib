@@ -1,5 +1,6 @@
 import { isType } from "@giveback007/util-lib";
-import React, { MouseEventHandler, ReactElement } from "react";
+import classNames from "classnames";
+import React, { MouseEventHandler } from "react";
 import type { ComponentBase, jsx_ } from "../../general.types";
 import { Backdrop } from "../Backdrop/Backdrop";
 
@@ -15,14 +16,16 @@ type ModalProps = {
 } & ComponentBase;
 
 export function Modal({
-    zIndex = 1004, className, style = {}, header, onClose, onBackdropClick, content
+    zIndex = 1004, className, style, header, onClose, onBackdropClick, content
 }: ModalProps) {
     return <>
         <Backdrop {...{ zIndex: zIndex -1, onBackdropClick, transition: false }} />
         <div
-            className="
-                fixed left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2
-                border border-secondary-300 shadow-lg bg-white w-11/12 md:max-w-md mx-auto rounded overflow-y-auto"
+            className={classNames(
+                "fixed left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2",
+                "border border-secondary-300 shadow-lg bg-white w-11/12 md:max-w-md mx-auto rounded overflow-y-auto",
+                className
+            )}
             style={{zIndex, ...style}}
         >
             <div className="relative">

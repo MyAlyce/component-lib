@@ -43,7 +43,7 @@ export type NavDrawerProps = {
 export const NavDrawer = ({
     brand, fixed = false, zIndex = 1002, user, onBrandClick,
     onAvatarClick, onBackdropClick, menuItems, isOpen,
-    className, style = {}
+    className, style
 }: NavDrawerProps) => <>{fixed && isOpen && <Backdrop {...{ onBackdropClick, zIndex: zIndex - 1 }} />}<div
     className={classNames(`
         flex flex-col bg-white

@@ -3,7 +3,7 @@ import { MouseEventHandler, ReactNode, useEffect, useState, MouseEvent } from 'r
 import React from 'react';
 import classNames from 'classnames';
 import type { ComponentBase, ObjMap } from '../../general.types';
-import type { ColorTypes, Size } from '../..';
+import type { ColorTypes, Size } from '../../general.types';
 import { Chevron } from '../Chevron/Chevron';
 
 export type AccordionProps = {

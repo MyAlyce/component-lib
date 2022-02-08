@@ -44,7 +44,6 @@ export function LoginPage({
     const { errors: err, submitCount } = formState;
     
     const onSubmit: SubmitHandler<FormData> = data => {
-        console.log(data)
         reset();
         setValue('email', data.email);
         setValue('password', data.password);
@@ -58,10 +57,6 @@ export function LoginPage({
 
     const emailErr = submitCount > 0 && err.email;
     const passErr = submitCount > 0 && err.password;
-
-    console.log(err);
-
-    // const x = register("email", { required: true, pattern: regexpUtil.email })
     
     return <div
         className={classNames(

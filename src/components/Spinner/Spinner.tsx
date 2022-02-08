@@ -1,6 +1,6 @@
 import classNames from 'classnames';
 import React from 'react';
-import type { Size } from '../..';
+import type { Size } from '../../general.types';
 import { spinnersSvg } from './SpinnerIcons';
 
 export const spinnerSizeMap = {

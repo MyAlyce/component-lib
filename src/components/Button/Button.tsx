@@ -1,5 +1,5 @@
 import classNames from 'classnames';
-import React, { HTMLProps, PropsWithChildren, useState } from 'react';
+import React, { PropsWithChildren, useState } from 'react';
 import type { ColorTypes, ObjMap, Size } from '../..';
 import { Badge } from '../Badge/Badge';
 
