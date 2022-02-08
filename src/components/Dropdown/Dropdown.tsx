@@ -2,13 +2,13 @@ import { isType } from '@giveback007/util-lib';
 import classNames from 'classnames';
 import React, { MouseEventHandler, PropsWithChildren, useRef, useState } from 'react';
 import { clickOutListener } from '../../utils';
-import type { ObjMap, Size } from '../..';
+import type { jsx_, ObjMap, Size } from '../../general.types';
 
 // TODO:
     // allow dropdown to be custom jsx
 
 export type DropdownProps = PropsWithChildren<{
-    header?: JSX.Element | string;
+    header?: jsx_ | string;
 
     items: DropdownItemProps[];
 
@@ -103,7 +103,7 @@ type DropdownBreak = {
 
 type DropdownJSX = {
     type: 'jsx',
-    element: JSX.Element;
+    element: jsx_;
 }
 
 type DropdownItemProps = DropdownAction | DropdownSection | DropdownBreak | DropdownJSX;

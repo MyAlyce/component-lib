@@ -12,6 +12,11 @@ export type TextInputProps = {
     label?: string;
     labelType?: 'default' | 'row:2/5' | 'row:1/3' | 'row:1/4' | 'addon';
     button?: { type?: ColorTypes; outline?: boolean; onClick?: () => any; label: string };
+    /**
+     * This will only be applied when label or button are present, allowing to style the input when it's embedded.
+     * Otherwise `className` will be applied.
+     */
+    inputClassName?: string;
 } & HTMLProps<HTMLInputElement>;
 
 const TextInputBorderMap = {
@@ -22,7 +27,7 @@ const TextInputBorderMap = {
 };
 export const TextInput = ({
     validation = 'default', className,
-    label, labelType = 'default',
+    label, labelType = 'default', inputClassName,
     button, ...props
 }: TextInputProps) => {
     const lbType = (label || false) && labelType;
@@ -34,7 +39,7 @@ export const TextInput = ({
             props.disabled && 'bg-secondary-200',
             lbType !== 'addon' && 'rounded-l-sm', 
             !button && 'rounded-r',
-            !(label || button) && className,
+            !(label || button) ? className : inputClassName,
         )}
     />;
 

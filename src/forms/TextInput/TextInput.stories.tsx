@@ -1,6 +1,7 @@
 import React from "react";
 import type { ComponentMeta, ComponentStory } from "@storybook/react";
 import { TextInput, TextInputProps } from "./TextInput";
+import { action } from "@storybook/addon-actions";
 
 const args: TextInputProps = {
     placeholder: 'placeholder'
@@ -24,5 +25,5 @@ export const Example = Template.bind({});
 export const WithButton = Template.bind({});
 WithButton.args = {
     ...args,
-    button: { label: 'Submit', type: 'primary', outline: false }
+    button: { label: 'Submit', type: 'primary', outline: false, onClick: action('Submit') }
 };

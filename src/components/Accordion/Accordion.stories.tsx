@@ -41,6 +41,10 @@ const Template: ComponentStory<typeof Accordion> = (args) => <Accordion {...args
 
 export const Example = Template.bind({});
 
+// TODO
 export const JsxDetails = Template.bind({});
+
+// TODO
+export const ProgrammaticToggle = Template.bind({});
 
 // im building the accordion, so first need some data

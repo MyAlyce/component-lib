@@ -1,11 +1,10 @@
 import React from 'react';
 import type { ComponentStory, ComponentMeta } from '@storybook/react';
+import { Modal } from './Modal';
 
-import { Button } from './Button';
-
-const meta: ComponentMeta<typeof Button> = {
-  title: 'Component/Button',
-  component: Button,
+const meta: ComponentMeta<typeof Modal> = {
+  title: 'Component/Modal',
+  component: Modal,
   args: {
 
   },
@@ -16,6 +15,6 @@ const meta: ComponentMeta<typeof Button> = {
 
 export default meta;
 
-const Template: ComponentStory<typeof Button> = (args) => <Button {...args}>Button</Button>;
+const Template: ComponentStory<typeof Modal> = (args) => <Modal {...args} />;
 
 export const Example = Template.bind({});

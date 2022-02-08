@@ -1,7 +1,9 @@
-import React, { MouseEventHandler, PropsWithChildren, useEffect, useState } from 'react';
+import React, { MouseEventHandler, PropsWithChildren, ReactElement, useState } from 'react';
 import classNames from 'classnames';
 import { isType } from '@giveback007/util-lib';
 import { Avatar } from '../../components/Avatar/Avatar';
+import { Backdrop } from '../../components/Backdrop/Backdrop';
+import type { ComponentBase, jsx_ } from '../../general.types';
 
 // TODO:
   // use width & ellipsis (for too long items)
@@ -13,7 +15,7 @@ export type NavDrawerProps = {
 
     zIndex?: number;
 
-    brand?: JSX.Element | string
+    brand?: jsx_ | string
 
     user?: {
         imgSrc?: string;
@@ -35,28 +37,28 @@ export type NavDrawerProps = {
 
     isOpen: boolean;
 
-    className?: string;
-}
+    // className?: string;
+} & ComponentBase;
 
 export const NavDrawer = ({
-    brand, fixed = false, zIndex = 100, user, onBrandClick, onAvatarClick, onBackdropClick, menuItems, isOpen
-}: NavDrawerProps) => <>{fixed && isOpen && <Backdrop {...{ onBackdropClick, zIndex: zIndex - 1}} />}<div
+    brand, fixed = false, zIndex = 1002, user, onBrandClick,
+    onAvatarClick, onBackdropClick, menuItems, isOpen,
+    className, style = {}
+}: NavDrawerProps) => <>{fixed && isOpen && <Backdrop {...{ onBackdropClick, zIndex: zIndex - 1 }} />}<div
     className={classNames(`
-        flex flex-col
-        bg-white
+        flex flex-col bg-white
         dark:bg-gray-800 dark:border-gray-600
-        shadow
-        text-secondary-600
-        w-64
+        shadow text-secondary-600 w-64
         scrollbar-thin scrollbar-track-secondary-200 scrollbar-thumb-secondary-400 scrollbar
         transition-all duration-500`,
         fixed && 'h-screen fixed top-0 ' + (fixed === 'left' ? 'left-0' : 'right-0'),
         fixed && [
             !isOpen && fixed === 'left' && '-translate-x-full',
             !isOpen && fixed === 'right' && 'translate-x-full',
-        ]
+        ],
+        className,
     )}
-    style={{zIndex}}
+    style={{zIndex, ...style}}
     // overflow-y-auto overflow-x-hidden
     // scrollbar-thin scrollbar scrollbar-thumb-custom scrollbar-track-custom-light overflow-y-scroll
     >
@@ -81,31 +83,15 @@ export const NavDrawer = ({
     </div>}
 
     <div className="flex flex-col justify-between flex-1">
-        <nav className='pl-1'>
+        <nav className='px-1.5'>
             {menuItems.map((item, i) => <MenuItem {...item} key={i} />)}
         </nav>
     </div>
 </div></>;
 
-const Backdrop = ({ zIndex, onBackdropClick }: { zIndex: number; onBackdropClick?: MouseEventHandler; }) => {
-    const [opacity, setOpacity] = useState(false);
-    useEffect(() => {
-        setTimeout(() => setOpacity(true), 0);
-    }, [zIndex]);
-
-    return <div
-        className={classNames(
-            'fixed top-0 left-0 right-0 w-screen h-screen bg-black transition-opacity duration-500',
-            opacity ? 'opacity-50' : 'opacity-0'
-        )}
-        style={{zIndex}}
-        onClick={onBackdropClick}
-    ></div>;
-};
-
 type MenuItem = {
     title: string;
-    icon?: JSX.Element;
+    icon?: jsx_;
 }
 
 type MenuSubmenu = {
@@ -115,10 +101,13 @@ type MenuSubmenu = {
 
 type MenuAction = {
     type: 'action';
-    onClick: MouseEventHandler;
+    onClick?: MouseEventHandler;
     /** "active" means the menu item is highlighted. */
     isActive?: boolean;
-} & MenuItem;
+
+    title: string | ReactElement;
+    icon?: jsx_;
+};
 
 type MenuSection = {
     type: 'section';
@@ -157,10 +146,10 @@ const MenuItem = (p: MenuItemProps) => {
         case 'action': {
             const { isActive, icon, title, onClick } = p;
             
-            return <MenuItemWrap {...{ isActive, onClick }}>
+            return isType(title, 'string') ? <MenuItemWrap {...{ isActive, onClick }}>
                 {icon && icon}
                 <span className="mx-4 font-medium">{title}</span>
-            </MenuItemWrap>;
+            </MenuItemWrap> : title;
         }
         case 'break':
             return <hr className="my-1 dark:border-gray-600" />;
@@ -215,25 +204,3 @@ const MenuItem = (p: MenuItemProps) => {
             throw new Error('This type of MenuItem is not implemented.');
     }
 };
-
-// export const SideBar_OLD = ({ fixed, zIndex = 100 }: NavDrawerProps) => <>
-//     <aside className={classNames(`
-//         flex flex-col
-//         h-screen
-//         w-16 m-0
-//         bg-gray-900 text-white shadow-lg`,
-//         fixed && 'fixed top-0 ' + (fixed === 'left' ? 'left-0' : 'right-0'),
-//     )}
-//         style={{zIndex}}
-//     >
-//         <SideBarIcon icon={BsFillAlarmFill} />
-//         <SideBarIcon icon={BsFillArchiveFill} text="tooltip" />
-//     </aside>
-// </>;
-
-// const SideBarIcon = (p: { icon: IconType, text?: string }) => <div
-//     className='sidebar-icon group'
-// >
-//     {<p.icon />}
-//     {p.text ? <span className='sidebar-tooltip group-hover:scale-100'>{p.text}</span> : null}
-// </div>;

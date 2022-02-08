@@ -1,5 +1,5 @@
 import { isType } from '@giveback007/util-lib';
-import { ReactNode, useEffect, useState } from 'react';
+import { MouseEventHandler, ReactNode, useEffect, useState, MouseEvent } from 'react';
 import React from 'react';
 import classNames from 'classnames';
 import type { ComponentBase, ObjMap } from '../../general.types';
@@ -10,7 +10,13 @@ export type AccordionProps = {
     title?: string | ReactNode;
     /** Set this to true to automatically collapse details when another is opened; Default: `false` */
     collapseOthers?: boolean;
-    items: { title: string; content: ReactNode }[];
+    items: {
+        title: string;
+        content: ReactNode;
+        /** By default Accordion will manage open/close of details, but you can also do this programmatically. */
+        isOpen?: boolean;
+        onClick?: (e: MouseEvent) => any;
+    }[];
     size?: Size | 'auto';
     type?: ColorTypes;
 } & ComponentBase;
@@ -20,19 +26,19 @@ const chevronColorMap: ObjMap<ColorTypes> = { danger: 'text-danger-700', info: '
 const accentColorMap: ObjMap<ColorTypes> = { danger: 'border-danger-600', info: 'border-info-600', primary: 'border-primary-600', secondary: 'border-secondary-600', success: 'border-success-600', warning: 'border-warning-600', };
 export function Accordion ({
     title, collapseOthers = false, items,
-    size = 'auto', type = 'info',
+    size = 'auto', type = 'secondary',
     className, style
 }: AccordionProps) {
     const [openId, setOpenId] = useState(Date.now());
     const onOpen = (id: number) => setOpenId(id);
 
     return <main className={classNames(accordionSizeMap[size], className)} style={style}>
-            <div className="w-full my-1">
-                {title && <h2 className="text-xl font-semibold mb-2">{title}</h2>}
-                <ul className="flex flex-col">
-                    {items.map((itm, i) => <AccordionItem {...{...itm, collapseOthers, onOpen, openId, type}} key={i} />)}
-                </ul>
-            </div>
+        <div className="w-full my-1">
+            {title && <h2 className="text-xl font-semibold mb-2">{title}</h2>}
+            <ul className="flex flex-col">
+                {items.map((itm, i) => <AccordionItem {...{...itm, collapseOthers, onOpen, openId, type}} key={i} />)}
+            </ul>
+        </div>
     </main>;
 }
 
@@ -44,8 +50,14 @@ type AccordionItemProps = {
     collapseOthers: boolean;
     content: ReactNode;
     type: ColorTypes;
+
+    isOpen?: boolean;
+    onClick?: (e: React.MouseEvent) => any;
 };
-const AccordionItem = ({ title, content, onOpen, openId, collapseOthers, type }: AccordionItemProps) => {
+const AccordionItem = ({
+    title, content, onOpen, openId,
+    collapseOthers, type, onClick, ...p
+}: AccordionItemProps) => {
     const [id, setId] = useState(openId);
     const [isOpen, setIsOpen] = useState(false);
 
@@ -56,7 +68,7 @@ const AccordionItem = ({ title, content, onOpen, openId, collapseOthers, type }:
         }
     }, [openId]);
 
-    const handleClick = () => {
+    const handleClick: MouseEventHandler = (e) => {
         if (!isOpen) {
             const newId = Date.now();
             setId(newId);
@@ -64,8 +76,11 @@ const AccordionItem = ({ title, content, onOpen, openId, collapseOthers, type }:
         }
 
         setIsOpen(!isOpen);
+        onClick?.(e);
     };
     
+    // if set in props use p.isOpen, else use isOpen via useState.
+    const open = isType(p.isOpen, 'boolean') ? p.isOpen : isOpen;
     return <li className="bg-white my-2 shadow-lg">
         <h2 
             onClick={handleClick}
@@ -74,10 +89,10 @@ const AccordionItem = ({ title, content, onOpen, openId, collapseOthers, type }:
                 font-semibold p-3 cursor-pointer
             "
         >
-            {isType(content, 'string') ? <span>{title}</span> : {title}}
+            {isType(content, 'string') ? <span>{title}</span> : title}
             
             <Chevron
-                direction={isOpen ? 'up' : "down"}
+                direction={open ? 'up' : "down"}
                 icon={8}
                 size='sm'
                 className={chevronColorMap[type]}
@@ -87,7 +102,7 @@ const AccordionItem = ({ title, content, onOpen, openId, collapseOthers, type }:
         <div className={classNames(
             "border-l-2 overflow-hidden max-h-0 duration-700 transition-all",
             accentColorMap[type],
-            isOpen && 'max-h-96',
+            open && 'max-h-96',
         )}>
             {isType(content, 'string') ? <p className="p-3 text-gray-900">
                 {content}
