@@ -1,54 +1,48 @@
-import type { HTMLProps } from 'react';
-import type { ColorTypes } from '../../general.types';
 import type { UseFormRegisterReturn } from 'react-hook-form';
-import React from 'react';
-import classNames from 'classnames';
-import { Button } from '../../components/Button/Button';
+import React, { HTMLProps } from 'react';
 import { TextInputBorderMap } from '../../utils';
+import classNames from 'classnames';
 
-export type TextInputProps = {
-    // size?: Size | 'auto';
+export type TextAreaProps = {
     validation?: 'default' | 'success' | 'warning' | 'danger';
     placeholder?: string;
     disabled?: boolean;
     label?: string;
     labelType?: 'default' | 'row:2/5' | 'row:1/3' | 'row:1/4' | 'addon';
-    button?: { type?: ColorTypes; outline?: boolean; onClick?: () => any; label: string };
+
     /**
-     * This will only be applied when label or button are present, allowing to style the input when it's embedded.
+     * This will only be applied when a label is present, allowing to style the input when it's embedded.
      * Otherwise `className` will be applied.
      */
     inputClassName?: string;
 
     /** Allows to register input for `react-hook-form` */
     register?: UseFormRegisterReturn;
-} & HTMLProps<HTMLInputElement>;
+} & HTMLProps<HTMLTextAreaElement>;
 
-export const TextInput = ({
+export function TextArea ({
     validation = 'default', className,
     label, labelType = 'default', inputClassName,
-    button, register, ...props
-}: TextInputProps) => {
+    register, ...props
+}: TextAreaProps) {
     const lbType = label && labelType;
-    const input = <input
+    
+    const textarea = <textarea
         alt={label}
         {...props}
         className={classNames(
-            "px-3 py-1.5 outline-0 border w-full",
+            "px-3 py-1.5 outline-0 border w-full rounded-r-sm",
             TextInputBorderMap[validation],
             props.disabled && 'bg-secondary-200',
-            lbType !== 'addon' && 'rounded-l-sm', 
-            !button && 'rounded-r',
-            !(label || button) ? className : inputClassName,
+            lbType !== 'addon' && 'rounded-l-sm',
+            !label ? className : inputClassName,
         )}
-        {...register}
-        
     />;
 
-    return (label || button) ? <div className={classNames(
-            'flex',
-            lbType === 'default' ? 'flex-col' : 'flex-row',
-            className
+    return label ? <div className={classNames(
+        'flex',
+        lbType === 'default' ? 'flex-col' : 'flex-row',
+        className
     )}>
         {label && <div
             className={classNames(
@@ -62,13 +56,6 @@ export const TextInput = ({
         >
             <span className={classNames(lbType !== 'default' && 'm-auto')}>{label}</span>
         </div>}
-        {button ?
-            <div className='flex flex-row w-full'>
-                {input}
-                <Button shape='flat' className='rounded-r-sm' {...button}>{button.label}</Button>
-            </div>
-            :
-            input
-        }
-    </div> : input;
-};
+        {textarea}
+    </div> : textarea;
+}

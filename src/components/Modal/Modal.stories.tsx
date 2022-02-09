@@ -13,7 +13,7 @@ const meta: ComponentMeta<typeof Modal> = {
   component: Modal,
   args: {
     header: 'Header',
-    content: <><div className="my-5">
+    children: <><div className="my-5">
         <p>{loremIpsum}</p>
     </div>
 

@@ -1,22 +1,23 @@
 import { isType } from "@giveback007/util-lib";
 import classNames from "classnames";
-import React, { MouseEventHandler } from "react";
+import React, { MouseEventHandler, PropsWithChildren } from "react";
 import type { ComponentBase, jsx_ } from "../../general.types";
 import { Backdrop } from "../Backdrop/Backdrop";
 
-type ModalProps = {
+type ModalProps = PropsWithChildren<{
     zIndex?: number;
     header?: string | jsx_;
-    content?: jsx_;
+    // content?: jsx_;
     /** Setting this function creates a top right 'x', clicking it will execute this function. */
     onClose?: MouseEventHandler;
 
     /** A function to execute on backdrop click. */
     onBackdropClick?: MouseEventHandler;
-} & ComponentBase;
+}> & ComponentBase;
 
 export function Modal({
-    zIndex = 1004, className, style, header, onClose, onBackdropClick, content
+    zIndex = 1004, className, style, header,
+    onClose, onBackdropClick, children
 }: ModalProps) {
     return <>
         <Backdrop {...{ zIndex: zIndex -1, onBackdropClick, transition: false }} />
@@ -48,12 +49,12 @@ export function Modal({
 
                 <div className="py-4 px-6">
                     {/* HEADER */}
-                    <div className="pb-3">
+                    {header && <div className="pb-3">
                         {isType(header, 'string') ? <p className="text-2xl font-bold">{header}</p> : header}
-                    </div>
+                    </div>}
 
-                    {/* CONTENT */}
-                    {content}
+                    {/* CHILDREN */}
+                    {children}
                 </div>
             </div>
         </div>
