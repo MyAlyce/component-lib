@@ -15,6 +15,7 @@ export * from './components/Spinner/Spinner';
 
 // -- FORMS -- //
 export * from './forms/Radio/Radio';
+export * from './forms/TextArea/TextArea';
 export * from './forms/TextInput/TextInput';
 export * from './forms/Toggle/Toggle';
 
