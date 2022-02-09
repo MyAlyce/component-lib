@@ -2181,11 +2181,6 @@ select {
   color: rgb(115 115 115 / var(--tw-text-opacity));
 }
 
-.text-secondary-400 {
-  --tw-text-opacity: 1;
-  color: rgb(161 161 170 / var(--tw-text-opacity));
-}
-
 .placeholder-secondary-300::-webkit-input-placeholder {
   --tw-placeholder-opacity: 1;
   color: rgb(212 212 216 / var(--tw-placeholder-opacity));

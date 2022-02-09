@@ -1,10 +1,11 @@
-import { isType } from '@giveback007/util-lib';
+import { isType, nonValue } from '@giveback007/util-lib';
 import { MouseEventHandler, ReactNode, useEffect, useState, MouseEvent } from 'react';
 import React from 'react';
 import classNames from 'classnames';
 import type { ComponentBase, ObjMap } from '../../general.types';
 import type { ColorTypes, Size } from '../../general.types';
 import { Chevron } from '../Chevron/Chevron';
+import { customScrollBar } from '../../utils';
 
 export type AccordionProps = {
     title?: string | ReactNode;
@@ -18,6 +19,7 @@ export type AccordionProps = {
         onClick?: (e: MouseEvent) => any;
     }[];
     size?: Size | 'auto';
+    contentMaxHeigh?: string | number;
     type?: ColorTypes;
 } & ComponentBase;
 
@@ -27,7 +29,7 @@ const accentColorMap: ObjMap<ColorTypes> = { danger: 'border-danger-600', info: 
 export function Accordion ({
     title, collapseOthers = false, items,
     size = 'auto', type = 'secondary',
-    className, style
+    className, style, contentMaxHeigh
 }: AccordionProps) {
     const [openId, setOpenId] = useState(Date.now());
     const onOpen = (id: number) => setOpenId(id);
@@ -36,7 +38,7 @@ export function Accordion ({
         <div className="w-full my-1">
             {title && <h2 className="text-xl font-semibold mb-2">{title}</h2>}
             <ul className="flex flex-col">
-                {items.map((itm, i) => <AccordionItem {...{...itm, collapseOthers, onOpen, openId, type}} key={i} />)}
+                {items.map((itm, i) => <AccordionItem {...{...itm, collapseOthers, onOpen, openId, type, contentMaxHeigh}} key={i} />)}
             </ul>
         </div>
     </main>;
@@ -53,6 +55,8 @@ type AccordionItemProps = {
 
     isOpen?: boolean;
     onClick?: (e: React.MouseEvent) => any;
+
+    contentMaxHeigh?: string | number;
 };
 const AccordionItem = ({
     title, content, onOpen, openId,
@@ -101,9 +105,12 @@ const AccordionItem = ({
 
         <div className={classNames(
             "border-l-2 overflow-hidden max-h-0 duration-700 transition-all",
+            customScrollBar,
             accentColorMap[type],
             open && 'max-h-96',
-        )}>
+        )}
+            style={{ maxHeight: !nonValue(p.contentMaxHeigh) && open ? p.contentMaxHeigh : undefined }}
+        >
             {isType(content, 'string') ? <p className="p-3 text-gray-900">
                 {content}
             </p> : content}

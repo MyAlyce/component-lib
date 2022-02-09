@@ -4,6 +4,7 @@ import { isType } from '@giveback007/util-lib';
 import { Avatar } from '../../components/Avatar/Avatar';
 import { Backdrop } from '../../components/Backdrop/Backdrop';
 import type { ComponentBase, jsx_ } from '../../general.types';
+import { customScrollBar } from '../../utils';
 
 // TODO:
   // use width & ellipsis (for too long items)
@@ -49,13 +50,13 @@ export const NavDrawer = ({
         flex flex-col bg-white
         dark:bg-gray-800 dark:border-gray-600
         shadow text-secondary-600 w-64
-        scrollbar-thin scrollbar-track-secondary-200 scrollbar-thumb-secondary-400 scrollbar
         transition-all duration-500`,
         fixed && 'h-screen fixed top-0 ' + (fixed === 'left' ? 'left-0' : 'right-0'),
         fixed && [
             !isOpen && fixed === 'left' && '-translate-x-full',
             !isOpen && fixed === 'right' && 'translate-x-full',
         ],
+        customScrollBar,
         className,
     )}
     style={{zIndex, ...style}}
