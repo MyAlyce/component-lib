@@ -12,6 +12,7 @@ export * from './components/Chevron/Chevron';
 export * from './components/Dropdown/Dropdown';
 export * from './components/Modal/Modal';
 export * from './components/Spinner/Spinner';
+export * from './components/SquareGrid/SquareGrid';
 
 // -- FORMS -- //
 export * from './forms/Radio/Radio';
