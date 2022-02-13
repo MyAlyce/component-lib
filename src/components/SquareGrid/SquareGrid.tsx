@@ -3,9 +3,6 @@ import React, { Component, PropsWithChildren, useEffect, useState } from 'react'
 import type { jsx_ } from '../../general.types';
 import { arrDivide } from '@giveback007/util-lib';
 
-// need to figure out how to equally divide all the boxes by the number of items
-// need to know how many rows you want
-
 export type SquareGirProps = {
     items: jsx_[];
 }
@@ -57,32 +54,22 @@ function GridFull(p: { items: jsx_[]; }) {
     useEffect(() => {
         const nOfItems = p.items.length;
         const nRows = Math.ceil(Math.sqrt(nOfItems));
+        
         const rows = arrDivide(p.items, nOfItems / nRows);
 
         setRows(rows);
         setSize((100 / rows.length).toFixed(5) + '%');
     }, [p.items]);
 
-    return <>{rows.map((rw) => <div className='flex flex-row' style={{ height: size }}>
-        {rw.map((children) => <GridItem {...{children, size}} />)}
+    return <>{rows.map((rw, i) => <div className='flex flex-row' style={{ height: size }} key={i}>
+        {rw.map((children, i) => <GridItem {...{children, size}} key={i} />)}
     </div>)}</>;
 }
 
 function GridItem({ children, size }: PropsWithChildren<{ size: string; }>) {
-    // const [size, setSize] = useState('0');
-
-    // useEffect(() => {
-    //     // get the %:w/h from nOfItems
-    //     const nRows = Math.ceil(Math.sqrt(nOfItems));
-        
-    //     const rows = arrDivide(items, nOfItems / nRows);
-
-    //     setSize((100 / rows).toFixed(5) + '%');
-    // }, [nOfItems]);
 
     return <div style={{ width: size }}
     className="h-full m-auto"
-    // className="m-auto"
     >{children}</div>;
     // classNames('border h-1/3 w-1/3', x.selected && 'border-blue-400')
 }

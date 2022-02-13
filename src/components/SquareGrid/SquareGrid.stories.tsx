@@ -18,7 +18,7 @@ const meta: ComponentMeta<typeof SquareGrid> = {
         const handler = (num: string | '-' | '+') => {
             const len = items.length;
             const n = num === '-' ? (-1 + len) : num === '+' ? (1 + len) : Number(num);
-            const arr = arrGen(n || 1).map((_, i) => <div className="border w-full h-full">{i + 1}</div>);
+            const arr = arrGen(n || 0).map((_, i) => <div className="border w-full h-full">{i + 1}</div>);
             setItems(arr);
         };
 
