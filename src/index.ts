@@ -10,6 +10,7 @@ export * from './components/Badge/Badge';
 export * from './components/Button/Button';
 export * from './components/Chevron/Chevron';
 export * from './components/Dropdown/Dropdown';
+export * from './components/Login/Login';
 export * from './components/Modal/Modal';
 export * from './components/Spinner/Spinner';
 export * from './components/SquareGrid/SquareGrid';
