@@ -89,7 +89,7 @@ export function LoginPage({
                             text-gray-800`,
                             isLoading ? 'cursor-not-allowed' : 'cursor-pointer'
                         )}
-                    > Sign up here</a>
+                    >Sign up here</a>
                 </p>}
 
                 <div className="mt-4"/>
@@ -139,13 +139,14 @@ export function LoginPage({
 }
 
 const ThirdPartyBtn = ({ 
-    disabled, name, logo
+    disabled, name, logo, onClick
 }: ThirdPartyBtnProps & { disabled?: boolean; }) => {
     return <Button
         size="auto"
         outline
         type="secondary"
         disabled={disabled}
+        onClick={onClick}
         className="py-2.5 px-3 rounded-md flex items-center mt-3.5"
     >
         {logo}
