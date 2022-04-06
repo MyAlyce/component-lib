@@ -93,7 +93,7 @@ export function TopBar({
 
 }
 
-const TopBarBtn = (p: PropsWithChildren<{ onClick: () => any; }>) => <li
+const TopBarBtn = (p: PropsWithChildren<{ onClick?: () => any; }>) => <li
     className='p-4 text-neutral-500 hover:text-neutral-800 min-w-2'
 >
     <span className='cursor-pointer' onClick={p.onClick}>{p.children}</span>
