@@ -1595,11 +1595,6 @@ select {
   background-color: rgb(161 161 170 / var(--tw-bg-opacity));
 }
 
-.bg-danger-400 {
-  --tw-bg-opacity: 1;
-  background-color: rgb(248 113 113 / var(--tw-bg-opacity));
-}
-
 .bg-gradient-to-t {
   background-image: linear-gradient(to top, var(--tw-gradient-stops));
 }
@@ -2521,9 +2516,9 @@ select {
   background-color: rgb(8 145 178 / var(--tw-bg-opacity));
 }
 
-.hover\:bg-danger-600:hover {
+.hover\:bg-danger-700:hover {
   --tw-bg-opacity: 1;
-  background-color: rgb(220 38 38 / var(--tw-bg-opacity));
+  background-color: rgb(185 28 28 / var(--tw-bg-opacity));
 }
 
 .hover\:bg-warning-600:hover {
@@ -2539,11 +2534,6 @@ select {
 .hover\:bg-gray-200:hover {
   --tw-bg-opacity: 1;
   background-color: rgb(229 231 235 / var(--tw-bg-opacity));
-}
-
-.hover\:bg-danger-700:hover {
-  --tw-bg-opacity: 1;
-  background-color: rgb(185 28 28 / var(--tw-bg-opacity));
 }
 
 .hover\:text-gray-500:hover {
